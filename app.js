@@ -27,7 +27,6 @@ require('./configs/middleware.config')(app);
 require('./configs/preformatter.config')(app);
 require('./configs/views.config')(app);
 require('./configs/session.config')(app);
-require('./configs/passport.config')(app);
       
 
 
