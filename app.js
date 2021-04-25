@@ -42,7 +42,7 @@ app.locals.title = 'Express - Generated with IronGenerator';
 
 require('./configs/preformatter.config')(app);
 require('./configs/views.config')(app);
-require('./configs/session.config')(app);
+// require('./configs/session.config')(app);
 require('./configs/middleware.config')(app);
 
 const index = require('./routes/index');
