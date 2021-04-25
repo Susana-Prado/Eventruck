@@ -17,4 +17,5 @@ router.get('/login', (req, res) => {
 router.get('/foodtruck-list', (req, res) => {
   res.render('foodtruck-list');
 })
+
 module.exports = router;

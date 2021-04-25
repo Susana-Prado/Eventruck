@@ -41,6 +41,6 @@ app.locals.title = 'Express - Generated with IronGenerator';
 const index = require('./routes/index');
 const signup = require('./routes/signup');
 app.use('/', index);
-app.use('/signup', index);
+app.use('/signup', signup);
 
 module.exports = app;
