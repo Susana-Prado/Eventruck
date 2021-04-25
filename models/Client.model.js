@@ -6,7 +6,9 @@ const clientSchema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true, unique: true },
   image: {type: String, default: "https://img2.freepng.es/20180611/cxa/kisspng-user-profile-computer-icons-avatar-5b1ef062b893c3.674439551528754274756.jpg"},
-  preferences: {type: String, enum: ['vegan', 'vegetarian', 'non-alcohol','asian']}
+  vegan: {type: Boolean, default: false},
+  vegetarian: {type: Boolean, default: false},
+  nonAlcohol: {type: Boolean, default: false},
   // reservations: [{type: mongoose.Schema.Types.ObjectId,
   //                ref: 'Foodtruck'}]
 })

@@ -1,7 +1,8 @@
 const express = require('express');
-const Client = require('../models/client-model');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const Client = require('../models/Client.model');
+const Owner = require('../models/Owner.model');
+const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 router.get('/', (req, res) => {
@@ -13,12 +14,14 @@ router.get('/client', (req, res) => {
 });
 
 router.post('/client', (req, res) => {
+  console.log(req.body);
   const {
     username,
     email,
     password,
     image,
-    preferences
+    vegan,
+    vegetarian,
   } = req.body;
   Client.findOne({
       username
@@ -36,7 +39,8 @@ router.post('/client', (req, res) => {
             email,
             password: hashPass,
             image,
-            preferences
+            vegan: !!vegan,
+            vegetarian: !!vegetarian,
           })
           .then(() => {
             res.redirect('/')
@@ -49,6 +53,42 @@ router.post('/client', (req, res) => {
 
 router.get('/owner', (req, res) => {
   res.render('signup/owner')
+})
+
+router.get('/client', (req, res) => {
+  res.render('signup/client')
+});
+
+router.get('/owner', (req, res) => {
+  res.render('signup/owner')
+});
+
+router.get('/login', (req, res) => {
+  res.render('login');
+});
+
+
+router.post('/login', (req, res) =>{
+  const { email, password } = req.body;
+
+  if(!email || !password){
+    res.render('login', { errorMessage: 'Email and password are required'});
+  }
+
+  Client.findOne({ email })
+  .then(user => {
+    if(!user){
+      res.render('login', { errorMessage: 'Incorrect email or password'});
+    }
+
+    const passwordCorrect = bcrypt.compareSync(password, user.password);
+    if(passwordCorrect){
+      req.session.currentUser = user;
+      res.redirect('/private/profile')
+    } else {
+      res.render('login', { errorMessage: 'Incorrect email or password'});
+    }
+  })
 })
 
 module.exports = router;
