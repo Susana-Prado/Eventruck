@@ -9,10 +9,7 @@
   },
   "dependencies": {
     "body-parser": "^1.18.3",
-<<<<<<< HEAD
-=======
     "cloudinary": "^1.25.1",
->>>>>>> 226885ce8c8cc6a6553fc274b3cc33ab14bebb16
     "connect-mongo": "^4.4.1",
     "cookie-parser": "^1.4.3",
     "dotenv": "^6.0.0",
