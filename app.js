@@ -46,7 +46,7 @@ require('./configs/session.config')(app);
 require('./configs/middleware.config')(app);
 
 const index = require('./routes/index');
-const signup = require('./routes/signup');
+const signup = require('./routes/auth.routes');
 app.use('/', index);
 app.use('/signup', signup);
 

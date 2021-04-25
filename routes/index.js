@@ -18,8 +18,4 @@ router.get('/foodtruck-list', (req, res) => {
   res.render('foodtruck-list');
 })
 
-// router.get('/foodtruck', (req, res) => {
-//   res.render('foodtruck');
-// })
-
 module.exports = router;
