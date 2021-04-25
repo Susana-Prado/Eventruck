@@ -46,8 +46,8 @@ require('./configs/views.config')(app);
 require('./configs/middleware.config')(app);
 
 const index = require('./routes/index');
-const signup = require('./routes/signup');
+const authRouter = require('./routes/auth.routes');
 app.use('/', index);
-app.use('/signup', signup);
+app.use('/auth', authRouter);
 
 module.exports = app;
