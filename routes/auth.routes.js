@@ -107,7 +107,7 @@ router.post('/owner', (req, res) => {
         Owner.create({
           username,
           email,
-          password,
+          password: hashPass,
           image,
           NIF,
           mobilephone
@@ -124,7 +124,7 @@ router.get('/client', (req, res) => {
 });
 
 router.get('/owner', (req, res) => {
-  res.render('signup/owner')
+  res.render('signup/owner');
 });
 
 router.get('/login', (req, res) => {
@@ -144,26 +144,54 @@ router.post('/login', (req, res) => {
     });
   }
 
-  Client.findOne({
-      email
-    })
-    .then(user => {
-      if (!user) {
-        res.render('login', {
-          errorMessage: 'Incorrect email or password'
-        });
-      }
-
-      const passwordCorrect = bcrypt.compareSync(password, user.password);
-      if (passwordCorrect) {
-        req.session.currentUser = user;
-        res.redirect('/private/profile')
+  Client.findOne({email})
+    .then(client => {
+      if (!client) {
+        console.log('no client');
+        Owner.findOne({
+          email
+        })
+        .then(owner=> {
+          if (!owner){
+            res.render('login', {
+              errorMessage: 'Incorrect email or password'
+            });
+          } else {
+            const passwordCorrect = bcrypt.compareSync(password, owner.password);
+            if (passwordCorrect) {
+              req.session.currentUser = owner;
+              res.redirect('/private/profile-owner')
+            } else {
+              res.render('login', {
+                errorMessage: 'Incorrect email or password'
+              })
+            }
+          }
+        })
       } else {
-        res.render('login', {
-          errorMessage: 'Incorrect email or password'
-        });
+        const passwordCorrect = bcrypt.compareSync(password, client.password);
+        if (passwordCorrect) {
+          console.log(client);
+          req.session.currentUser = client;
+          res.redirect('/private/profile-owner')
+        } else {
+          res.render('login', {
+            errorMessage: 'Incorrect email or password'
+          });
+        }
       }
     })
-})
+});
+
+
+router.get('/logout', (req,res) =>{
+  req.session.destroy(err => {
+    if(err){
+      res.redirect('/');
+    } else {
+      res.redirect('/')
+    }
+  })
+});
 
 module.exports = router;
