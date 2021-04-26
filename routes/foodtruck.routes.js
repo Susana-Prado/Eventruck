@@ -1,12 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const Foodtruck = require("../models/Foodtruck.model");
+
+const Foodtruck = require('../models/Foodtruck.model')
+const uploader = require("../configs/cloudinary.config");
+
 
 router.get("/register", (req, res) => {
   res.render("foodtruck/register");
 });
 
-router.post("/register", (req, res) => {
+router.post('/register', uploader.fields([{ name: 'image', maxCount: 5 }]), (req, res) => {
+
   const {
     name,
     description,

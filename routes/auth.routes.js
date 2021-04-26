@@ -3,6 +3,7 @@ const router = express.Router();
 const Client = require("../models/Client.model");
 const Owner = require("../models/Owner.model");
 const bcrypt = require("bcryptjs");
+const uploader = require("../configs/cloudinary.config");
 const saltRounds = 10;
 
 router.get("/", (req, res) => {
@@ -13,7 +14,7 @@ router.get("/client", (req, res) => {
   res.render("signup/client");
 });
 
-router.post("/client", (req, res) => {
+router.post("/client", uploader.single('image'), (req, res) => {
   console.log(req.body);
   const {
     username,
@@ -81,30 +82,41 @@ router.get("/owner", (req, res) => {
   res.render("signup/owner");
 });
 
-router.post("/owner", (req, res) => {
-  const { username, email, password, image, NIF, mobilephone } = req.body;
+router.post("/owner", uploader.single('image'), (req, res) => {
+  const {
+    username,
+    email,
+    password,
+    image,
+    NIF,
+    mobilephone
+  } = req.body;
   Owner.findOne({
     username,
   }).then((owner) => {
     if (owner) {
-      res.render("signup/owner", {
-        errorMessage: "User already exists",
-      });
+
+      res.render('signup/owner', {
+        errorMessage: 'User already exists'
+      })
     } else {
       const salt = bcrypt.genSaltSync(saltRounds);
       const hashPass = bcrypt.hashSync(password, salt);
       Owner.create({
-        username,
-        email,
-        password: hashPass,
-        image,
-        NIF,
-        mobilephone,
-      }).then(() => {
-        res.redirect("/private/profile");
-      });
+
+          username,
+          email,
+          password: hashPass,
+          image,
+          NIF,
+          mobilephone
+        })
+        .then(() => {
+          res.redirect('/private/profile')
+        })
     }
-  });
+  })
+
 });
 
 router.get("/client", (req, res) => {
@@ -120,7 +132,10 @@ router.get("/login", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  const { email, password } = req.body;
+  const {
+    email,
+    password
+  } = req.body;
 
   if (!email || !password) {
     res.render("login", {
@@ -128,7 +143,9 @@ router.post("/login", (req, res) => {
     });
   }
 
-  Client.findOne({ email }).then((client) => {
+  Client.findOne({
+    email
+  }).then((client) => {
     if (!client) {
       console.log("no client");
       Owner.findOne({

@@ -1,14 +1,5 @@
 require('dotenv').config();
-
-const bodyParser   = require('body-parser');
-const cookieParser = require('cookie-parser');
-const express      = require('express');
-const favicon      = require('serve-favicon');
-const hbs          = require('hbs');
-const mongoose     = require('mongoose');
-const logger       = require('morgan');
-const path         = require('path');
-
+const express = require('express');
 
 //Database
 require('./configs/db.config');
@@ -19,19 +10,15 @@ require('./configs/debugger.config');
 const app = express();
 
 // Middleware Setup
-
 require('./configs/middleware.config')(app);
-
 
 // default value for title local
 app.locals.title = 'Eventruck - Express';
 
 // Configs
-
 require('./configs/preformatter.config')(app);
 require('./configs/views.config')(app);
 require('./configs/session.config')(app);
-
 
 const index = require('./routes/index');
 const authRouter = require('./routes/auth.routes');
