@@ -85,7 +85,7 @@ router.get('/owner', (req, res) => {
   res.render('signup/owner')
 })
 
-router.post('owner', (req, res) => {
+router.post('/owner', (req, res) => {
   const {
     username,
     email,
