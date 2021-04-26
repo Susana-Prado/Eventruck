@@ -13,7 +13,7 @@ const app = express();
 require('./configs/middleware.config')(app);
 
 // default value for title local
-app.locals.title = 'Express - Generated with IronGenerator';
+app.locals.title = 'Eventruck - Express';
 
 // Configs
 require('./configs/preformatter.config')(app);

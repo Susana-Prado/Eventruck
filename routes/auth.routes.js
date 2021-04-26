@@ -1,20 +1,20 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const Client = require("../models/Client.model");
-const Owner = require("../models/Owner.model");
-const bcrypt = require("bcryptjs");
-const uploader = require("../configs/cloudinary.config");
+const Client = require('../models/Client.model');
+const Owner = require('../models/Owner.model');
+const bcrypt = require('bcryptjs');
+const uploader = require('../configs/cloudinary.config');
 const saltRounds = 10;
 
-router.get("/", (req, res) => {
-  res.render("signup");
+router.get('/', (req, res) => {
+  res.render('signup');
 });
 
-router.get("/client", (req, res) => {
-  res.render("signup/client");
+router.get('/client', (req, res) => {
+  res.render('signup/client');
 });
 
-router.post("/client", uploader.single('image'), (req, res) => {
+router.post('/client', uploader.single('image'), (req, res) => {
   console.log(req.body);
   const {
     username,
@@ -43,8 +43,8 @@ router.post("/client", uploader.single('image'), (req, res) => {
     username,
   }).then((client) => {
     if (client) {
-      res.render("signup/client", {
-        errorMessage: "User already exists",
+      res.render('signup/client', {
+        errorMessage: 'User already exists',
       });
     } else {
       const salt = bcrypt.genSaltSync(saltRounds);
@@ -72,17 +72,17 @@ router.post("/client", uploader.single('image'), (req, res) => {
         cakes: !!cakes,
         dessert: !!dessert,
       }).then(() => {
-        res.redirect("/private/profile");
+        res.redirect('/private/profile');
       });
     }
   });
 });
 
-router.get("/owner", (req, res) => {
-  res.render("signup/owner");
+router.get('/owner', (req, res) => {
+  res.render('signup/owner');
 });
 
-router.post("/owner", uploader.single('image'), (req, res) => {
+router.post('/owner', uploader.single('image'), (req, res) => {
   const {
     username,
     email,
@@ -116,27 +116,27 @@ router.post("/owner", uploader.single('image'), (req, res) => {
   })
 });
 
-router.get("/client", (req, res) => {
-  res.render("signup/client");
+router.get('/client', (req, res) => {
+  res.render('signup/client');
 });
 
-router.get("/owner", (req, res) => {
-  res.render("signup/owner");
+router.get('/owner', (req, res) => {
+  res.render('signup/owner');
 });
 
-router.get("/login", (req, res) => {
-  res.render("login");
+router.get('/login', (req, res) => {
+  res.render('login');
 });
 
-router.post("/login", (req, res) => {
+router.post('/login', (req, res) => {
   const {
     email,
     password
   } = req.body;
 
   if (!email || !password) {
-    res.render("login", {
-      errorMessage: "Email and password are required",
+    res.render('login', {
+      errorMessage: 'Email and password are required',
     });
   }
 
@@ -144,22 +144,22 @@ router.post("/login", (req, res) => {
     email
   }).then((client) => {
     if (!client) {
-      console.log("no client");
+      console.log('no client');
       Owner.findOne({
         email,
       }).then((owner) => {
         if (!owner) {
-          res.render("login", {
-            errorMessage: "Incorrect email or password",
+          res.render('login', {
+            errorMessage: 'Incorrect email or password',
           });
         } else {
           const passwordCorrect = bcrypt.compareSync(password, owner.password);
           if (passwordCorrect) {
             req.session.currentUser = owner;
-            res.redirect("/private/profile-owner");
+            res.redirect('/private/profile-owner');
           } else {
-            res.render("login", {
-              errorMessage: "Incorrect email or password",
+            res.render('login', {
+              errorMessage: 'Incorrect email or password',
             });
           }
         }
@@ -169,22 +169,22 @@ router.post("/login", (req, res) => {
       if (passwordCorrect) {
         console.log(client);
         req.session.currentUser = client;
-        res.redirect("/private/profile-owner");
+        res.redirect('/private/profile-owner');
       } else {
-        res.render("login", {
-          errorMessage: "Incorrect email or password",
+        res.render('login', {
+          errorMessage: 'Incorrect email or password',
         });
       }
     }
   });
 });
 
-router.get("/logout", (req, res) => {
+router.get('/logout', (req, res) => {
   req.session.destroy((err) => {
     if (err) {
-      res.redirect("/");
+      res.redirect('/');
     } else {
-      res.redirect("/");
+      res.redirect('/');
     }
   });
 });

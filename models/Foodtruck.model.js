@@ -25,7 +25,8 @@ const foodtruckSchema = new Schema({
     cocktails: {type: Boolean, default: false},
     iceCream: {type: Boolean, default: false},
     cakes: {type: Boolean, default: false},
-    dessert: {type: Boolean, default: false}
+    dessert: {type: Boolean, default: false},
+    any: {type: Boolean, default: true}
     // contact: type: mongoose.Schema.Types.ObjectId,
     //   ref: 'Owner'
 })
