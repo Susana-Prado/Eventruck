@@ -6,11 +6,12 @@ router.get('/register', (req, res) => {
   res.render('foodtruck/register')
 });
 
-router.post('/foodtruck/register', (req, res) => {
+router.post('/register', (req, res) => {
   const {
     name,
     description,
     images,
+    price,
     date,
     availability,
     food,
@@ -44,6 +45,7 @@ router.post('/foodtruck/register', (req, res) => {
             name,
             description,
             images,
+            price,
             date,
             availability,
             food: !!food,
@@ -65,7 +67,7 @@ router.post('/foodtruck/register', (req, res) => {
             dessert: !!dessert
           })
           .then(() => {
-            res.redirect('/foodtruck/register')
+            res.redirect('/')
           })
       }
     })

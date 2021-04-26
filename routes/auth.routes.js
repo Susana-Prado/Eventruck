@@ -107,7 +107,7 @@ router.post('/owner', (req, res) => {
         Owner.create({
           username,
           email,
-          password,
+          password: hashPass,
           image,
           NIF,
           mobilephone
