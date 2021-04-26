@@ -95,24 +95,25 @@ router.post("/owner", uploader.single('image'), (req, res) => {
     username,
   }).then((owner) => {
     if (owner) {
-      res.render("signup/owner", {
-        errorMessage: "User already exists",
-      });
+      res.render('signup/owner', {
+        errorMessage: 'User already exists'
+      })
     } else {
       const salt = bcrypt.genSaltSync(saltRounds);
       const hashPass = bcrypt.hashSync(password, salt);
       Owner.create({
-        username,
-        email,
-        password: hashPass,
-        image,
-        NIF,
-        mobilephone,
-      }).then(() => {
-        res.redirect("/private/profile");
-      });
+          username,
+          email,
+          password: hashPass,
+          image,
+          NIF,
+          mobilephone
+        })
+        .then(() => {
+          res.redirect('/private/profile')
+        })
     }
-  });
+  })
 });
 
 router.get("/client", (req, res) => {
