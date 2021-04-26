@@ -6,12 +6,12 @@ router.get('/', (req, res) => {
   res.render('index');
 });
 
-router.get('/login', (req, res) => {
-  res.render('login');
-});
-
 router.get('/foodtruck-list', (req, res) => {
   res.render('foodtruck-list');
+});
+
+router.get('/profile', (req, res) => {
+  res.render('profile', { user: req.user })
 })
 
 module.exports = router;
