@@ -1,2 +1,20 @@
 <h1>Sign up as owner</h1>
-<a href="/signup">Back to signup</a>
+
+<form action="/auth/owner" method="POST">
+    <label for="username">Username:</label>
+    <input type="text" name="username">
+    <label for="email">Email:</label>
+    <input type="text" name="email">
+    <label for="password">Password:</label>
+    <input type="password" name="password">
+    <label for="image">Upload a profile image:</label>
+    <input type="text" name="image">
+    <label for="NIF">NIF:</label>
+    <input type="text" name="NIF">
+    <label for="mobilephone">Mobilephone:</label>
+    <input type="text" name="mobilephone">
+
+    <button>Sign In</button>
+</form>
+
+<a href="/auth">Back to signup</a>

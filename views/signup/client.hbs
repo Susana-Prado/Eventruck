@@ -1,2 +1,54 @@
 <h1>Sign up as client</h1>
-<a href="/signup">Back to signup</a>
+
+<form action="/auth/client" method="POST">
+    <label for="username">Username:</label>
+    <input type="text" name="username">
+    <label for="email">Email:</label>
+    <input type="text" name="email">
+    <label for="password">Password:</label>
+    <input type="password" name="password">
+    <label for="image">Upload a profile image:</label>
+    <input type="text" name="image">
+
+    <h3>Preferences:</h3>
+    <label for="food">Food</label>
+    <input type="checkbox" name="food">
+    <label for="drinks">Drinks</label>
+    <input type="checkbox" name="drinks">
+    
+    <h3>Type of food:</h3>
+    <label for="bagels">Bagels</label>
+    <input type="checkbox" name="bagels">
+    <label for="sandwiches">Sandwiches</label>
+    <input type="checkbox" name="sandwiches">
+    <label for="burritos">Burritos</label>
+    <input type="checkbox" name="burritos">
+    <label for="crepes">Crepes</label>
+    <input type="checkbox" name="crepes">
+    <label for="hamburgers">Hamburgers</label>
+    <input type="checkbox" name="hamburgers">
+    <label for="pizza">Pizza</label>
+    <input type="checkbox" name="pizza">
+    <label for="sushi">Sushi</label>
+    <input type="checkbox" name="sushi">
+    <label for="smoothies">Smoothies</label>
+    <input type="checkbox" name="smoothies">
+    <label for="tea">Tea</label>
+    <input type="checkbox" name="tea">
+    <label for="coffee">Coffee</label>
+    <input type="checkbox" name="coffee">
+    <label for="beer">Beer</label>
+    <input type="checkbox" name="beer">
+    <label for="cocktails">Cocktails</label>
+    <input type="checkbox" name="cocktails">
+    <label for="iceCream">Ice Cream</label>
+    <input type="checkbox" name="iceCream">
+    <label for="cakes">Cakes</label>
+    <input type="checkbox" name="cakes">
+    <label for="dessert">Dessert</label>
+    <input type="checkbox" name="dessert">
+    
+    <button>Sign In</button>
+</form>
+
+<a href="/auth">Back to signup</a>
