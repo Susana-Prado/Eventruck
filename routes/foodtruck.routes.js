@@ -1,16 +1,13 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-
 const Foodtruck = require('../models/Foodtruck.model')
-const uploader = require("../configs/cloudinary.config");
+const uploader = require('../configs/cloudinary.config');
 
-
-router.get("/register", (req, res) => {
-  res.render("foodtruck/register");
+router.get('/register', (req, res) => {
+  res.render('foodtruck/register');
 });
 
 router.post('/register', uploader.fields([{ name: 'image', maxCount: 5 }]), (req, res) => {
-
   const {
     name,
     description,
@@ -41,8 +38,8 @@ router.post('/register', uploader.fields([{ name: 'image', maxCount: 5 }]), (req
     name,
   }).then((foodtruck) => {
     if (foodtruck) {
-      res.render("foodtruck/register", {
-        errorMessage: "Foodtruck already registered",
+      res.render('foodtruck/register', {
+        errorMessage: 'Foodtruck already registered',
       });
     } else {
       Foodtruck.create({
@@ -71,14 +68,14 @@ router.post('/register', uploader.fields([{ name: 'image', maxCount: 5 }]), (req
         dessert: !!dessert,
         any: !!any,
       }).then(() => {
-        res.redirect("/");
+        res.redirect('/');
       });
     }
   });
 });
 
-router.get("/results", (req, res) => {
-  res.render("foodtruck/foodtruck-list");
+router.get('/results', (req, res) => {
+  res.render('foodtruck/foodtruck-list');
 });
 
 router.post('/results', (req, res) =>{
@@ -88,7 +85,7 @@ router.post('/results', (req, res) =>{
   })
   .then((results) =>{
     console.log(results);
-    res.render("foodtruck/foodtruck-list", {foodtrucks: results});
+    res.render('foodtruck/foodtruck-list', {foodtrucks: results});
   })
   .catch(error => console.error(error))
 });

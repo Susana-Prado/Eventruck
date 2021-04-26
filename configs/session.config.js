@@ -5,7 +5,7 @@ const MongoStore = require('connect-mongo');
 module.exports = (app) => {
   app.use(
     session({
-      secret: "basic-auth-secret",
+      secret: 'basic-auth-secret',
       resave: true,
       saveUninitialized: false, 
       cookie: { maxAge: 3600000 },
