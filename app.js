@@ -63,9 +63,11 @@ require('./configs/middleware.config')(app);
 const index = require('./routes/index');
 const authRouter = require('./routes/auth.routes');
 const privateRouter = require('./routes/private-routes');
+const foodtruckRouter = require('./routes/foodtruck.routes');
 
 app.use('/', index);
 app.use('/auth', authRouter);
 app.use('/private', privateRouter);
+app.use('/foodtruck', foodtruckRouter);
 
 module.exports = app;
