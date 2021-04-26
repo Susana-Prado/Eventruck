@@ -4,3 +4,21 @@
 <a href="/auth">sign up</a>
 <a href="/auth/login">Login</a>
 <a href="/foodtruck-list">View all foodtrucks</a>
+
+<form action="" method="GET">
+  <div class="foodtruck-search">
+    <div class="search-element">
+      <label class="search-label">What are you looking for?</label>
+      <input class="search-input" type="text" autocomplete="on" placeholder="Foodtruck" name="query">
+    </div>
+    <div class="search-element">
+      <label class="search-label">Where are you looking?</label>
+      <input class="search-input" type="text" placeholder="City" class="" autocomplete="on" name="location">
+    </div>
+    <div class="search-element">
+      <label class="search-label">When</label>
+      <input class="search-input" type="date" placeholder="Date" class="" name="date">
+    </div>
+    <a type="submit" class="search-button">Search</a>
+  </div>
+</form>
