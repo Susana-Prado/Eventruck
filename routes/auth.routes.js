@@ -82,7 +82,7 @@ router.get("/owner", (req, res) => {
   res.render("signup/owner");
 });
 
-router.post("/owner", (req, res) => {
+router.post("/owner", uploader.single('image'), (req, res) => {
   const {
     username,
     email,
