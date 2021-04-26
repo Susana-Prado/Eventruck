@@ -8,12 +8,24 @@
 <form action="" method="GET">
   <div class="foodtruck-search">
     <div class="search-element">
-      <label class="search-label">What are you looking for?</label>
-      <input class="search-input" type="text" autocomplete="on" placeholder="Foodtruck" name="query">
+      <label class="search-label">Type of food</label>
+      <select name="search-input">
+        <option value="vegan">Vegan</option>
+        <option value="vegetarian">Vegetarian</option>
+        <option value="nonalcohol">Non Alcohol</option>
+        <option value="asian">Asian</option>
+        <option value="med">Mediterranian</option>
+        <option value="sushi">Sushi</option>
+      </select>
     </div>
     <div class="search-element">
       <label class="search-label">Where are you looking?</label>
-      <input class="search-input" type="text" placeholder="City" class="" autocomplete="on" name="location">
+      <select name="search-input">
+        <option value="bcn">Barcelona</option>
+        <option value="gir">Girona</option>
+        <option value="llei">Lleida</option>
+        <option value="tarr">Tarragona</option>
+      </select>
     </div>
     <div class="search-element">
       <label class="search-label">When</label>
