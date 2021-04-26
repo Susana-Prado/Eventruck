@@ -87,24 +87,24 @@ router.post("/owner", (req, res) => {
     username,
   }).then((owner) => {
     if (owner) {
-      res.render('signup/owner', {
-        errorMessage: 'User already exists'
-      })} else {
-        const salt = bcrypt.genSaltSync(saltRounds);
-        const hashPass = bcrypt.hashSync(password, salt);
-        Owner.create({
-          username,
-          email,
-          password: hashPass,
-          image,
-          NIF,
-          mobilephone
-        })
-        .then(() => {
-          res.redirect('/private/profile')
-        })
-      }
-    })
+      res.render("signup/owner", {
+        errorMessage: "User already exists",
+      });
+    } else {
+      const salt = bcrypt.genSaltSync(saltRounds);
+      const hashPass = bcrypt.hashSync(password, salt);
+      Owner.create({
+        username,
+        email,
+        password: hashPass,
+        image,
+        NIF,
+        mobilephone,
+      }).then(() => {
+        res.redirect("/private/profile");
+      });
+    }
+  });
 });
 
 router.get("/client", (req, res) => {
