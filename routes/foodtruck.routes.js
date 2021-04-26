@@ -30,7 +30,7 @@ router.post('/register', (req, res) => {
     cocktails,
     iceCream,
     cakes,
-    dessert
+    dessert,
   } = req.body;
   Foodtruck.findOne({
       name
@@ -64,7 +64,7 @@ router.post('/register', (req, res) => {
             cocktails: !!cocktails,
             iceCream: !!iceCream,
             cakes: !!cakes,
-            dessert: !!dessert
+            dessert: !!dessert,
           })
           .then(() => {
             res.redirect('/')

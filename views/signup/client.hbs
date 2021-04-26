@@ -1,6 +1,6 @@
 <h1>Sign up as client</h1>
 
-<form action="/auth/client" method="POST">
+<form action="/auth/client" method="POST" enctype="multipart/form-data">
     <label for="username">Username:</label>
     <input type="text" name="username">
     <label for="email">Email:</label>
@@ -8,7 +8,7 @@
     <label for="password">Password:</label>
     <input type="password" name="password">
     <label for="image">Upload a profile image:</label>
-    <input type="text" name="image">
+    <input type="file" name="image">
 
     <h3>Preferences:</h3>
     <label for="food">Food</label>
@@ -48,7 +48,7 @@
     <label for="dessert">Dessert</label>
     <input type="checkbox" name="dessert">
     
-    <button>Sign In</button>
+    <button>Sign Up</button>
 </form>
 
 <a href="/auth">Back to signup</a>

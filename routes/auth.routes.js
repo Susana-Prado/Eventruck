@@ -3,6 +3,7 @@ const router = express.Router();
 const Client = require("../models/Client.model");
 const Owner = require("../models/Owner.model");
 const bcrypt = require("bcryptjs");
+const uploader = require("../configs/cloudinary.config");
 const saltRounds = 10;
 
 router.get("/", (req, res) => {
@@ -13,7 +14,7 @@ router.get("/client", (req, res) => {
   res.render("signup/client");
 });
 
-router.post("/client", (req, res) => {
+router.post("/client", uploader.single('image'), (req, res) => {
   console.log(req.body);
   const {
     username,
