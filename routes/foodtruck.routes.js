@@ -100,10 +100,6 @@ router.post('/results', (req, res) => {
     }
   }
 
-  // if(date !== filterObject.date){
-  // filterObject[availability] = true;
-  // }
-
   Foodtruck.find(filterObject)
     .then((results) => {
       res.render('foodtruck/foodtruck-list', { foodtrucks: results });
@@ -185,7 +181,5 @@ router.post('/:id', (req, res) => {
     })
     .catch((error) => console.error(error));
 });
-
-
 
 module.exports = router;

@@ -28,8 +28,6 @@ const foodtruckSchema = new Schema({
     dessert: {type: Boolean, default: false},
     any: {type: Boolean, default: true},
     creator: {type: Schema.Types.ObjectId, ref: 'Owner' }
-    // contact: type: mongoose.Schema.Types.ObjectId,
-    //   ref: 'Owner'
 })
 
 const Foodtruck = mongoose.model('Foodtruck', foodtruckSchema);
