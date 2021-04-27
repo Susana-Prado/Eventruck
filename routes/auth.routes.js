@@ -83,37 +83,29 @@ router.get('/owner', (req, res) => {
 });
 
 router.post('/owner', uploader.single('image'), (req, res) => {
-  const {
-    username,
-    email,
-    password,
-    image,
-    NIF,
-    mobilephone
-  } = req.body;
+  const { username, email, password, image, NIF, mobilephone } = req.body;
   Owner.findOne({
     username,
   }).then((owner) => {
     if (owner) {
       res.render('signup/owner', {
-        errorMessage: 'User already exists'
-      })
+        errorMessage: 'User already exists',
+      });
     } else {
       const salt = bcrypt.genSaltSync(saltRounds);
       const hashPass = bcrypt.hashSync(password, salt);
       Owner.create({
-          username,
-          email,
-          password: hashPass,
-          image,
-          NIF,
-          mobilephone
-        })
-        .then(() => {
-          res.redirect('/private/profile')
-        })
+        username,
+        email,
+        password: hashPass,
+        image,
+        NIF,
+        mobilephone,
+      }).then(() => {
+        res.redirect('/private/profile');
+      });
     }
-  })
+  });
 });
 
 router.get('/client', (req, res) => {
@@ -129,10 +121,7 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  const {
-    email,
-    password
-  } = req.body;
+  const { email, password } = req.body;
 
   if (!email || !password) {
     res.render('login', {
@@ -141,7 +130,7 @@ router.post('/login', (req, res) => {
   }
 
   Client.findOne({
-    email
+    email,
   }).then((client) => {
     if (!client) {
       console.log('no client');
