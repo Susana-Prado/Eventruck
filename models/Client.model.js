@@ -18,7 +18,6 @@ const clientSchema = new Schema({
   sushi: {type: Boolean, default: false},
   smoothies: {type: Boolean, default: false},
   tea: {type: Boolean, default: false},
-  coffee: {type: Boolean, default: false},
   beer: {type: Boolean, default: false},
   cocktails: {type: Boolean, default: false},
   iceCream: {type: Boolean, default: false},
