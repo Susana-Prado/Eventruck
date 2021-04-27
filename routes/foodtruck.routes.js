@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Foodtruck = require('../models/Foodtruck.model');
 const uploader = require('../configs/cloudinary.config');
+const { resource } = require('../app');
+const Owner = require('../models/Owner.model');
 
 router.get('/register', (req, res) => {
   res.render('foodtruck/register');
@@ -168,6 +170,81 @@ router.post('/:id/edit', (req, res) => {
     iceCream,
     cakes,
     dessert,
+<<<<<<< HEAD
+=======
+    any
+  } = req.body;
+  Foodtruck.findOne({
+    name,
+  }).then((foodtruck) => {
+    if (foodtruck) {
+      res.render('foodtruck/register', {
+        errorMessage: 'Foodtruck already registered',
+      });
+    } else {
+      Foodtruck.create({
+        name,
+        description,
+        images,
+        price,
+        date,
+        availability,
+        food: !!food,
+        drinks: !!drinks,
+        bagels: !!bagels,
+        sandwiches: !!sandwiches,
+        burritos: !!burritos,
+        crepes: !!crepes,
+        hamburgers: !!hamburgers,
+        pizza: !!pizza,
+        sushi: !!sushi,
+        smoothies: !!smoothies,
+        tea: !!tea,
+        coffee: !!coffee,
+        beer: !!beer,
+        cocktails: !!cocktails,
+        iceCream: !!iceCream,
+        cakes: !!cakes,
+        dessert: !!dessert,
+        any: !!any,
+        creator: req.session.currentUser._id
+      }).then((createdFoodtruck) => {
+        console.log(req.session.currentUser._id)
+        Owner.updateOne({_id: req.session.currentUser._id}, {$addToSet: {foodtrucks: createdFoodtruck._id}}, {new: true})
+        .then(()=> {
+          res.redirect('/private/profile-owner')
+        })
+        .catch(error => console.error(error));
+        res.redirect('/private/profile-owner');
+      });
+    }
+  });
+});
+
+router.post('/results', (req, res) =>{
+  const {type, specialty, price, date} = req.body;
+  console.log(type, specialty, price, date)
+  const filterObject = {};
+  if (type !== 'any') {
+    filterObject[type] = true;
+  }
+  if (specialty !== 'any') {
+    filterObject[specialty] = true;
+  }
+  if (price !== 'any') {
+    if (price.indexOf('+') > -1) {
+      filterObject.price = { $gte: parseInt(price) };
+    } else {
+      const lowerPrice = parseInt(price.split('-')[0]);
+      const higherPrice = parseInt(price.split('-')[1]);
+      filterObject.price = { $gte: lowerPrice, $lte: higherPrice };
+    }
+  }
+  Foodtruck.find(filterObject)
+  .then((results) =>{
+    console.log(results);
+    res.render('foodtruck/foodtruck-list', {foodtrucks: results});
+>>>>>>> 84255f49d52032f04b004388f6f33ac61e256f12
   })
     .then(() => {
       res.redirect(`/foodtruck/${id}`);
@@ -183,5 +260,7 @@ router.post('/:id', (req, res) => {
     })
     .catch((error) => console.error(error));
 });
+
+
 
 module.exports = router;

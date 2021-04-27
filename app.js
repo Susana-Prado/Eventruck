@@ -22,7 +22,7 @@ require('./configs/session.config')(app);
 
 const index = require('./routes/index');
 const authRouter = require('./routes/auth.routes');
-const privateRouter = require('./routes/private-routes');
+const privateRouter = require('./routes/private.routes');
 const foodtruckRouter = require('./routes/foodtruck.routes');
 
 app.use('/', index);
