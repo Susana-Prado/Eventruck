@@ -2,12 +2,14 @@ const express = require('express');
 const router = express.Router();
 const Foodtruck = require('../models/Foodtruck.model')
 const uploader = require('../configs/cloudinary.config');
+const { resource } = require('../app');
+const Owner = require('../models/Owner.model');
 
 router.get('/register', (req, res) => {
   res.render('foodtruck/register');
 });
 
-router.post('/register', uploader.fields([{ name: 'image', maxCount: 5 }]), (req, res) => {
+router.post('/register', uploader.fields([{ name: 'images', maxCount: 5 }]), (req, res) => {
   const {
     name,
     description,
@@ -67,8 +69,15 @@ router.post('/register', uploader.fields([{ name: 'image', maxCount: 5 }]), (req
         cakes: !!cakes,
         dessert: !!dessert,
         any: !!any,
-      }).then(() => {
-        res.redirect('/');
+        creator: req.session.currentUser._id
+      }).then((createdFoodtruck) => {
+        console.log(req.session.currentUser._id)
+        Owner.updateOne({_id: req.session.currentUser._id}, {$addToSet: {foodtrucks: createdFoodtruck._id}}, {new: true})
+        .then(()=> {
+          res.redirect('/private/profile-owner')
+        })
+        .catch(error => console.error(error));
+        res.redirect('/private/profile-owner');
       });
     }
   });
@@ -107,5 +116,7 @@ router.get('/:id', (req, res) => {
   .then((foodtruck) => res.render("foodtruck/foodtruck-details", foodtruck))
   .catch((error) => next(error))
 })
+
+
 
 module.exports = router;
