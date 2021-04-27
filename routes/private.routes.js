@@ -67,20 +67,18 @@ router.post('/profile-owner/edit', (req, res) => {
     .catch((error) => console.error(error));
 });
 
-router.post('/profile', (req, res) => {
+router.post('/profile/delete', (req, res) => {
   const id = req.session.currentUser._id;
-
-  Client.findByIdAndDelete(id)
+  Client.findByIdAndDelete({ _id: id })
     .then(() => {
       res.redirect('/');
     })
     .catch((error) => console.error(error));
 });
 
-router.post('/profile-owner', (req, res) => {
+router.post('/profile-owner/delete', (req, res) => {
   const id = req.session.currentUser._id;
-
-  Owner.findByIdAndDelete(id)
+  Owner.findByIdAndDelete({ _id: id })
     .then(() => {
       res.redirect('/');
     })

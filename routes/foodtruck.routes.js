@@ -16,7 +16,7 @@ router.post(
     const {
       name,
       description,
-      images,
+      image,
       price,
       date,
       availability,
@@ -50,7 +50,7 @@ router.post(
         Foodtruck.create({
           name,
           description,
-          images,
+          image,
           price,
           date,
           availability,
@@ -72,8 +72,12 @@ router.post(
           cakes: !!cakes,
           dessert: !!dessert,
           any: !!any,
-        }).then(() => {
-          res.redirect('/');
+          creator: req.session.currentUser._id,
+        }).then((createdFoodtruck) => {
+          Owner.updateOne({_id: req.session.currentUser._id}, {$addToSet: {foodtrucks: createdFoodtruck._id}}, {new: true})
+          .then(() => {
+            res.redirect('/');
+          })
         });
       }
     });
@@ -114,6 +118,15 @@ router.get('/:id', (req, res) => {
     .catch((error) => console.error(error));
 });
 
+router.post(':id/delete', (req, res) => {
+  const { id } = req.params;
+  Foodtruck.findByIdAndDelete({_id: id})
+    .then(() => {
+      res.redirect('/');
+    })
+    .catch((error) => console.error(error));
+});
+
 router.get('/:id/edit', (req, res) => {
   const { id } = req.params;
   Foodtruck.findById(id)
@@ -123,7 +136,7 @@ router.get('/:id/edit', (req, res) => {
 
 router.post('/:id/edit', (req, res) => {
   const { id } = req.params;
-  let { name, description, images, price, date, availability } = req.body;
+  let { name, description, image, price, date, availability } = req.body;
   const food = req.body.food ? true : false;
   const drinks = req.body.drinks ? true : false;
   const bagels = req.body.bagels ? true : false;
@@ -145,7 +158,7 @@ router.post('/:id/edit', (req, res) => {
   Foodtruck.findByIdAndUpdate(id, {
     name,
     description,
-    images,
+    image,
     price,
     date,
     availability,
@@ -169,15 +182,6 @@ router.post('/:id/edit', (req, res) => {
   })
     .then(() => {
       res.redirect(`/foodtruck/${id}`);
-    })
-    .catch((error) => console.error(error));
-});
-
-router.post('/:id', (req, res) => {
-  const { id } = req.params;
-  Foodtruck.findByIdAndDelete(id)
-    .then(() => {
-      res.redirect('/');
     })
     .catch((error) => console.error(error));
 });

@@ -2,9 +2,14 @@
 <h1>{{owner.username}}</h1>
 
 <a href="/foodtruck/register">Register a foodtruck</a>
-<a href="">Edit your profile</a>
+
+{{!-- <a href="">Edit your profile</a> --}}
+
+<form action="/profile-owner" method="POST">
+  <p>Delete profile</p>
+</form>
+
 <a href="/auth/logout">Logout</a>
-<h1>holaaaa</h1>
 
 {{#each owner.foodtrucks}}
   <h3>{{this.name}}</h3>

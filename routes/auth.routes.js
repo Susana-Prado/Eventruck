@@ -36,7 +36,8 @@ router.post('/client', uploader.single('image'), (req, res) => {
         email,
         password: hashPass,
         image
-      }).then(() => {
+      }).then((user) => {
+        req.session.currentUser = user;
         res.redirect('/private/profile');
       });
     }
@@ -66,8 +67,9 @@ router.post('/owner', uploader.single('image'), (req, res) => {
         image,
         NIF,
         mobilephone,
-      }).then(() => {
-        res.redirect('/private/profile');
+      }).then((user) => {
+        req.session.currentUser = user;
+        res.redirect('/private/profile-owner');
       });
     }
   });
