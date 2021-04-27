@@ -15,7 +15,6 @@ router.get('/client', (req, res) => {
 });
 
 router.post('/client', uploader.single('image'), (req, res) => {
-  console.log(req.body);
   const {
     username,
     email,
@@ -110,18 +109,10 @@ router.post('/owner', uploader.single('image'), (req, res) => {
           mobilephone
         })
         .then(() => {
-          res.redirect('/private/profile')
+          res.redirect('/private/profile-owner')
         })
     }
   })
-});
-
-router.get('/client', (req, res) => {
-  res.render('signup/client');
-});
-
-router.get('/owner', (req, res) => {
-  res.render('signup/owner');
 });
 
 router.get('/login', (req, res) => {
@@ -144,7 +135,6 @@ router.post('/login', (req, res) => {
     email
   }).then((client) => {
     if (!client) {
-      console.log('no client');
       Owner.findOne({
         email,
       }).then((owner) => {
@@ -167,9 +157,8 @@ router.post('/login', (req, res) => {
     } else {
       const passwordCorrect = bcrypt.compareSync(password, client.password);
       if (passwordCorrect) {
-        console.log(client);
         req.session.currentUser = client;
-        res.redirect('/private/profile-owner');
+        res.redirect('/private/profile');
       } else {
         res.render('login', {
           errorMessage: 'Incorrect email or password',
