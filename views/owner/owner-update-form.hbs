@@ -1,0 +1,19 @@
+<h1>Edit your profile</h1>
+
+<form action="/private/profile-owner/edit" method="POST">
+    <label for="username">Username:</label>
+    <input type="text" name="username" value="{{owner.username}}">
+    <label for="email">Email:</label>
+    <input type="text" name="email" value="{{owner.email}}">
+    <label for="password">Password:</label>
+    <input type="password" name="password" value="{{owner.password}}">
+    <label for="image">Upload a profile image:</label>
+    <input type="file" name="image" value="{{owner.image}}">
+    <label for="NIF">NIF:</label>
+    <input type="text" name="NIF" value="{{owner.NIF}}">
+    <label for="mobilephone">Mobilephone:</label>
+    <input type="text" name="mobilephone" value="{{owner.mobilephone}}">
+
+    
+    <button class="submit">Update</button>
+</form>

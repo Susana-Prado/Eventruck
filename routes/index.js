@@ -11,7 +11,7 @@ router.get('/foodtruck-list', (req, res) => {
 });
 
 router.get('/profile', (req, res) => {
-  res.render('profile', { user: req.user })
+  res.render('client/profile', { user: req.user })
 })
 
 module.exports = router;
