@@ -33,7 +33,7 @@ router.post('/profile/edit', (req, res) => {
     email,
     password: hashPassword,
     image,
-  })
+  }, {new:true})
     .then(() => {
       res.redirect('/private/profile');
     })
@@ -57,7 +57,7 @@ router.post('/profile-owner/edit', (req, res) => {
     image,
     NIF,
     mobilephone,
-  })
+  }, {new:true} )
     .then(() => {
       res.redirect('/private/profile-owner');
     })
