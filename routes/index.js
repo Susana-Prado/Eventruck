@@ -10,8 +10,4 @@ router.get('/foodtruck-list', (req, res) => {
   res.render('foodtruck-list');
 });
 
-router.get('/profile', (req, res) => {
-  res.render('client/profile', { user: req.user })
-})
-
 module.exports = router;

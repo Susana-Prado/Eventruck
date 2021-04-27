@@ -5,6 +5,11 @@
 <a href="/private/profile-owner/edit">Edit your profile</a>
 <a href="/auth/logout">Logout</a>
 
+{{#each owner.foodtrucks}}
+  <h3>{{this.description}}</h3>
+{{/each}}
+
 <form action="/private/profile-owner" method="POST">
     <button type="submit">Delete user</button>
 </form>
+

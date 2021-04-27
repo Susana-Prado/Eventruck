@@ -14,8 +14,12 @@ router.get('/profile', isLoggedIn, (req, res) => {
   res.render('client/profile', { client: req.session.currentUser });
 });
 
+
 router.get('/profile-owner', isLoggedIn, (req, res) => {
-  res.render('owner/profile-owner', { owner: req.session.currentUser });
+  Owner.findById({_id: req.session.currentUser._id}).populate('foodtrucks').then((user) => {
+    console.log(user)
+    res.render('owner/profile-owner', { owner: user })
+  })
 });
 
 router.get('/profile/edit', (req, res) => {
