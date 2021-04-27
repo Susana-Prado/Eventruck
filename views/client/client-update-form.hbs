@@ -1,0 +1,14 @@
+<h1>Edit your profile</h1>
+
+<form action="/private/profile/edit" method="POST">
+    <label for="username">Username:</label>
+    <input type="text" name="username" value="{{client.username}}">
+    <label for="email">Email:</label>
+    <input type="text" name="email" value="{{client.email}}">
+    <label for="password">Password:</label>
+    <input type="password" name="password" value="{{client.password}}">
+    <label for="image">Upload a profile image:</label>
+    <input type="file" name="image" value="{{client.image}}">
+    
+    <button class="submit">Update</button>
+</form>
