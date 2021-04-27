@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const clientSchema = new Schema({
+<<<<<<< HEAD
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true, unique: true },
@@ -23,6 +24,27 @@ const clientSchema = new Schema({
   iceCream: {type: Boolean, default: false},
   cakes: {type: Boolean, default: false},
   dessert: {type: Boolean, default: false},
+=======
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  image: {
+    type: String,
+    default: "https://img2.freepng.es/20180611/cxa/kisspng-user-profile-computer-icons-avatar-5b1ef062b893c3.674439551528754274756.jpg"
+  },
+>>>>>>> 0890dd6d7d39adb726e22634e8bbc80bfc1ae9f0
   // reservations: [{type: mongoose.Schema.Types.ObjectId,
   //                ref: 'Foodtruck'}]
 })
