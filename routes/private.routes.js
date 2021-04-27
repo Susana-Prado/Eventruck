@@ -1,5 +1,4 @@
 const express = require('express');
-const Owner = require('../models/Owner.model');
 const router = express.Router();
 const Client = require('../models/Client.model');
 const Owner = require('../models/Owner.model');
