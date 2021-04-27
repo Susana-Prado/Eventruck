@@ -74,20 +74,42 @@ router.post('/register', uploader.fields([{ name: 'image', maxCount: 5 }]), (req
   });
 });
 
-router.get('/results', (req, res) => {
-  res.render('foodtruck/foodtruck-list');
-});
+// router.get('/results', (req, res) => {
+//   res.render('foodtruck/foodtruck-list');
+// });
 
 router.post('/results', (req, res) =>{
   const {type, specialty, price, date} = req.body;
-  Foodtruck.find({
-
-  })
+  console.log(type, specialty, price, date)
+  const filterObject = {};
+  if (type !== 'any') {
+    filterObject[type] = true;
+  }
+  if (specialty !== 'any') {
+    filterObject[specialty] = true;
+  }
+  if (price !== 'any') {
+    if (price.indexOf('+') > -1) {
+      filterObject.price = { $gte: parseInt(price) };
+    } else {
+      const lowerPrice = parseInt(price.split('-')[0]);
+      const higherPrice = parseInt(price.split('-')[1]);
+      filterObject.price = { $gte: lowerPrice, $lte: higherPrice };
+    }
+  }
+  Foodtruck.find(filterObject)
   .then((results) =>{
     console.log(results);
     res.render('foodtruck/foodtruck-list', {foodtrucks: results});
   })
   .catch(error => console.error(error))
 });
+
+// router.get('/:id', (req, res) => {
+//   const { id } = req.params;
+//   Foodtruck.findById({ _id: id })
+//   .then((foodtruck) => res.render("foodtruck/foodtruck-details", foodtruck))
+//   .catch((error) => next(error))
+// })
 
 module.exports = router;
