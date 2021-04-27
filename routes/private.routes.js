@@ -1,5 +1,5 @@
 const express = require('express');
-// const Owner = require('../models/Owner.model');
+const Owner = require('../models/Owner.model');
 const router = express.Router();
 const Client = require('../models/Client.model');
 const Owner = require('../models/Owner.model');
@@ -15,16 +15,12 @@ router.get('/profile', isLoggedIn, (req, res) => {
   res.render('client/profile', { client: req.session.currentUser });
 });
 
-// router.get('/profile-owner', isLoggedIn, (req, res) => {
-//   // Owner.findById({_id: req.currentsession.currentUser._id})
-//   // // .populate('foodtrucks')
-//   // .then(()=> {
-//   //   // foundOwner
-//   //   console.log(foundOwner)
-//     res.render('profile-owner', { owner: req.session.currentUser })
-//   // })
-//   res.render('owner/profile-owner', { owner: req.session.currentUser });
-// });
+router.get('/profile-owner', isLoggedIn, (req, res) => {
+  Owner.findById({_id: req.session.currentUser._id}).populate('foodtrucks').then((user) => {
+    console.log(user)
+    res.render('profile-owner', { owner: user })
+  })
+});
 
 router.get('/profile/edit', (req, res) => {
   res.render('client/client-update-form', { client: req.session.currentUser });
