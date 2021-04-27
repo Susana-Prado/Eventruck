@@ -74,10 +74,6 @@ router.post('/register', uploader.fields([{ name: 'image', maxCount: 5 }]), (req
   });
 });
 
-// router.get('/results', (req, res) => {
-//   res.render('foodtruck/foodtruck-list');
-// });
-
 router.post('/results', (req, res) =>{
   const {type, specialty, price, date} = req.body;
   console.log(type, specialty, price, date)
@@ -105,11 +101,11 @@ router.post('/results', (req, res) =>{
   .catch(error => console.error(error))
 });
 
-// router.get('/:id', (req, res) => {
-//   const { id } = req.params;
-//   Foodtruck.findById({ _id: id })
-//   .then((foodtruck) => res.render("foodtruck/foodtruck-details", foodtruck))
-//   .catch((error) => next(error))
-// })
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+  Foodtruck.findById({ _id: id })
+  .then((foodtruck) => res.render("foodtruck/foodtruck-details", foodtruck))
+  .catch((error) => next(error))
+})
 
 module.exports = router;
