@@ -76,7 +76,15 @@ router.post('/owner', uploader.single('image'), (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-  res.render('login');
+  if (req.session.currentUser && req.session.currentUser._id) {
+    if (req.session.currentUser.NIF) {
+      res.redirect('/private/profile-owner');
+    } else {
+      res.redirect('/private/profile');
+    }
+  } else {
+    res.render('login');
+  }
 });
 
 router.post('/login', (req, res) => {

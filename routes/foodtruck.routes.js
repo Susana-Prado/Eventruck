@@ -4,6 +4,7 @@ const Foodtruck = require('../models/Foodtruck.model');
 const uploader = require('../configs/cloudinary.config');
 const { resource } = require('../app');
 const Owner = require('../models/Owner.model');
+const Booking = require('../models/Booking.model');
 
 router.get('/register', (req, res) => {
   res.render('foodtruck/register');
@@ -18,8 +19,6 @@ router.post(
       description,
       image,
       price,
-      date,
-      availability,
       food,
       drinks,
       bagels,
@@ -52,8 +51,7 @@ router.post(
           description,
           image,
           price,
-          date,
-          availability,
+          date: [],
           food: !!food,
           drinks: !!drinks,
           bagels: !!bagels,
@@ -86,7 +84,6 @@ router.post(
 
 router.post('/results', (req, res) => {
   const { type, specialty, price, date } = req.body;
-  console.log(type, specialty, price, date);
   const filterObject = {};
   if (type !== 'any') {
     filterObject[type] = true;
@@ -103,6 +100,8 @@ router.post('/results', (req, res) => {
       filterObject.price = { $gte: lowerPrice, $lte: higherPrice };
     }
   }
+  filterObject.date = { $nin: [date] };
+  req.session.resultsDate = date;
 
   Foodtruck.find(filterObject)
     .then((results) => {
@@ -118,7 +117,7 @@ router.get('/:id', (req, res) => {
     .catch((error) => console.error(error));
 });
 
-router.post(':id/delete', (req, res) => {
+router.post('/:id/delete', (req, res) => {
   const { id } = req.params;
   Foodtruck.findByIdAndDelete({_id: id})
     .then(() => {
@@ -185,5 +184,20 @@ router.post('/:id/edit', (req, res) => {
     })
     .catch((error) => console.error(error));
 });
+
+router.post('/:id/book', (req, res) => {
+  const { id } = req.params;
+  Foodtruck.updateOne({_id: id}, {$addToSet: {date: req.session.resultsDate}}, {new: true})
+  .then(() => {
+    Booking.create({
+      client: req.session.currentUser._id,
+      foodtruck: id,
+      date: req.session.resultsDate,
+      bookingDate: Date.now(),
+    })
+    .catch((error) => console.error(error));
+  })
+  .catch((error) => console.error(error));
+})
 
 module.exports = router;

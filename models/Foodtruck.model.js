@@ -6,8 +6,7 @@ const foodtruckSchema = new Schema({
     description: { type: String, required: true, unique: true },
     image: {type: String, required: true, default: "https://img2.freepng.es/20180611/cxa/kisspng-user-profile-computer-icons-avatar-5b1ef062b893c3.674439551528754274756.jpg"},
     price: {type: Number, required: true},
-    date: {type: String}, //object with reservation dates as keys and true as value.
-    availability: {type: String},
+    date: [{type: Date}],
     food: {type: Boolean, default: false},
     drinks: {type: Boolean, default: false},
     coffee: {type: Boolean, default: false}, 
