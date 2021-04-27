@@ -2,17 +2,17 @@
 
 <form action="/auth/owner" method="POST" enctype="multipart/form-data">
     <label for="username">Username:</label>
-    <input type="text" name="username">
+    <input type="text" name="username" required>
     <label for="email">Email:</label>
-    <input type="text" name="email">
+    <input type="text" name="email" required>
     <label for="password">Password:</label>
-    <input type="password" name="password">
+    <input type="password" name="password" required>
     <label for="image">Upload a profile image:</label>
-    <input type="file" name="image">
+    <input type="file" name="image" required>
     <label for="NIF">NIF:</label>
-    <input type="text" name="NIF">
+    <input type="text" name="NIF" required>
     <label for="mobilephone">Mobilephone:</label>
-    <input type="text" name="mobilephone">
+    <input type="text" name="mobilephone" required>
 
     <button>Sign In</button>
 </form>
