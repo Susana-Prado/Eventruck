@@ -97,9 +97,13 @@ router.post('/results', (req, res) => {
       filterObject.price = { $gte: lowerPrice, $lte: higherPrice };
     }
   }
+
+  // if(date !== filterObject.date){
+  // filterObject[availability] = true;
+  // }
+
   Foodtruck.find(filterObject)
     .then((results) => {
-      console.log(results);
       res.render('foodtruck/foodtruck-list', { foodtrucks: results });
     })
     .catch((error) => console.error(error));
