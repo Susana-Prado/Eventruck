@@ -1,0 +1,21 @@
+{{!-- <h1>This is the private owner page</h1>
+<h1>{{owner.username}}</h1>
+
+<a href="/foodtruck/register">Register a foodtruck</a>
+
+{{!-- <a href="">Edit your profile</a> --}}
+
+<form action="/profile-owner" method="POST">
+  <p>Delete profile</p>
+</form>
+
+<a href="/auth/logout">Logout</a>
+
+{{#each owner.foodtrucks}}
+  <h3>{{this.name}}</h3>
+  <h3>{{this.description}}</h3>
+  <a href="/foodtruck/{{this.id}}/edit">Edit foodtruck details</a>
+  <form action="/foodtruck/{{this.id}}/delete" method="POST">
+    <button type="submit">Delete foodtruck</button>
+  </form>
+{{/each}} --}}
