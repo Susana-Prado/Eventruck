@@ -19,10 +19,10 @@ app.locals.title = 'Eventruck - Express';
 require('./configs/views.config')(app);
 require('./configs/session.config')(app);
 
-const index = require('./routes/index');
-const authRouter = require('./routes/auth.routes');
-const privateRouter = require('./routes/private.routes');
-const foodtruckRouter = require('./routes/foodtruck.routes');
+const index = require('routes/index');
+const authRouter = require('routes/auth.routes');
+const privateRouter = require('routes/private.routes');
+const foodtruckRouter = require('routes/foodtruck.routes');
 
 app.use('/', index);
 app.use('/auth', authRouter);
