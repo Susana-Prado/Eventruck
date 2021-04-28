@@ -1,58 +1,56 @@
 <h1>Edit foodtruck details</h1>
 
-<form action="/foodtruck/{{foodtruck.id}}/edit" method="POST">
+{{!-- enctype="multipart/form-data" --}}
+
+<form action="/foodtruck/{{foodtruck._id}}/edit" enctype="multipart/form-data" method="POST">
   <label for="name">Foodtruck name:</label>
-  <label for="description">Description:</label>
   <input type="text" name="name" value="{{foodtruck.name}}">
+  <label for="description">Description:</label>
   <input type="text" name="description" value="{{foodtruck.description}}">
-  <label for="image">Images:</label>
-  <input type="text" name="image" value="{{foodtruck.image}}">
+  <label for="image">Images (max. 5 files):</label>
+  <input type="file" name="image" value="{{foodtruck.image}}" multiple>
   <label for="price">Price:</label>
   <input type="text" name="price" value="{{foodtruck.price}}">
-  <label for="date">date:</label>
-  <input type="text" name="date">
-  <label for="availability">availability:</label>
-  <input type="text" name="availability" value="{{foodtruck.availability}}">
 
   <h3>Preferences:</h3>
   <label for="food">Food</label>
-  <input type="checkbox" name="food">
+  <input type="checkbox" name="food" {{#if foodtruck.food}}checked{{/if}}>
   <label for="drinks">Drinks</label>
-  <input type="checkbox" name="drinks">
+  <input type="checkbox" name="drinks" {{#if foodtruck.drinks}}checked{{/if}}>
 
   <h3>Type of food:</h3>
   <label for="bagels">Bagels</label>
-  <input type="checkbox" name="bagels">
+  <input type="checkbox" name="bagels" {{#if foodtruck.bagels}}checked{{/if}}>
   <label for="sandwiches">Sandwiches</label>
-  <input type="checkbox" name="sandwiches">
+  <input type="checkbox" name="sandwiches" {{#if foodtruck.sandwiches}}checked{{/if}}>
   <label for="burritos">Burritos</label>
-  <input type="checkbox" name="burritos" >
+  <input type="checkbox" name="burritos" {{#if foodtruck.burritos}}checked{{/if}}>
   <label for="crepes">Crepes</label>
-  <input type="checkbox" name="crepes" >
+  <input type="checkbox" name="crepes" {{#if foodtruck.crepes}}checked{{/if}}>
   <label for="hamburgers">Hamburgers</label>
-  <input type="checkbox" name="hamburgers">
+  <input type="checkbox" name="hamburgers" {{#if foodtruck.hamburgers}}checked{{/if}}>
   <label for="pizza">Pizza</label>
-  <input type="checkbox" name="pizza">
+  <input type="checkbox" name="pizza" {{#if foodtruck.pizza}}checked{{/if}}>
   <label for="sushi">Sushi</label>
-  <input type="checkbox" name="sushi">
+  <input type="checkbox" name="sushi" {{#if foodtruck.sushi}}checked{{/if}}>
   <label for="smoothies">Smoothies</label>
-  <input type="checkbox" name="smoothies">
+  <input type="checkbox" name="smoothies" {{#if foodtruck.smoothies}}checked{{/if}}>
   <label for="tea">Tea</label>
-  <input type="checkbox" name="tea">
+  <input type="checkbox" name="tea" {{#if foodtruck.tea}}checked{{/if}}>
   <label for="coffee">Coffee</label>
-  <input type="checkbox" name="coffee">
+  <input type="checkbox" name="coffee" {{#if foodtruck.coffee}}checked{{/if}}>
   <label for="beer">Beer</label>
-  <input type="checkbox" name="beer" >
+  <input type="checkbox" name="beer" {{#if foodtruck.beer}}checked{{/if}}>
   <label for="cocktails">Cocktails</label>
-  <input type="checkbox" name="cocktails">
+  <input type="checkbox" name="cocktails" {{#if foodtruck.cocktails}}checked{{/if}}>
   <label for="iceCream">Ice Cream</label>
-  <input type="checkbox" name="iceCream">
+  <input type="checkbox" name="iceCream" {{#if foodtruck.iceCream}}checked{{/if}}>
   <label for="cakes">Cakes</label>
-  <input type="checkbox" name="cakes">
+  <input type="checkbox" name="cakes" {{#if foodtruck.cakes}}checked{{/if}}>
   <label for="dessert">Dessert</label>
-  <input type="checkbox" name="dessert">
+  <input type="checkbox" name="dessert" {{#if foodtruck.dessert}}checked{{/if}}>
 
-  <button>Update</button>
+  <button type="submit">Update</button>
 
 </form>
 

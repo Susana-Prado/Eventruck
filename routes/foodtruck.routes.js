@@ -74,7 +74,7 @@ router.post(
         }).then((createdFoodtruck) => {
           Owner.updateOne({_id: req.session.currentUser._id}, {$addToSet: {foodtrucks: createdFoodtruck._id}}, {new: true})
           .then(() => {
-            res.redirect('/');
+            res.redirect('/private/profile-owner');
           })
         });
       }
@@ -110,13 +110,6 @@ router.post('/results', (req, res) => {
     .catch((error) => console.error(error));
 });
 
-router.get('/:id', (req, res) => {
-  const { id } = req.params;
-  Foodtruck.findById({ _id: id })
-    .then((foodtruck) => res.render('foodtruck/foodtruck-details', foodtruck))
-    .catch((error) => console.error(error));
-});
-
 router.post('/:id/delete', (req, res) => {
   const { id } = req.params;
   Foodtruck.findByIdAndDelete({_id: id})
@@ -129,13 +122,16 @@ router.post('/:id/delete', (req, res) => {
 router.get('/:id/edit', (req, res) => {
   const { id } = req.params;
   Foodtruck.findById(id)
-    .then((foodtruck) => res.render('foodtruck/foodtruck-edit', { foodtruck }))
+    .then((foodtruck) => { 
+      console.log(foodtruck.food)
+      res.render('foodtruck/foodtruck-edit', { foodtruck })})
     .catch((error) => console.error(error));
 });
 
-router.post('/:id/edit', (req, res) => {
+router.post('/:id/edit', uploader.fields([{ name: 'image', maxCount: 5 }]), (req, res) => {
+  console.log(req.body);
   const { id } = req.params;
-  let { name, description, image, price, date, availability } = req.body;
+  let { name, description, image, price } = req.body;
   const food = req.body.food ? true : false;
   const drinks = req.body.drinks ? true : false;
   const bagels = req.body.bagels ? true : false;
@@ -159,8 +155,6 @@ router.post('/:id/edit', (req, res) => {
     description,
     image,
     price,
-    date,
-    availability,
     food,
     drinks,
     bagels,
@@ -199,5 +193,12 @@ router.post('/:id/book', (req, res) => {
   })
   .catch((error) => console.error(error));
 })
+
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+  Foodtruck.findById({ _id: id })
+    .then((foodtruck) => res.render('foodtruck/foodtruck-details', foodtruck))
+    .catch((error) => console.error(error));
+});
 
 module.exports = router;
