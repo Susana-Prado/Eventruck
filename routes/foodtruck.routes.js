@@ -189,6 +189,10 @@ router.post('/:id/book', (req, res) => {
       date: req.session.resultsDate,
       bookingDate: Date.now(),
     })
+    .then((reservation) => {
+      console.log(reservation);
+      res.redirect('/private/profile');
+    })
     .catch((error) => console.error(error));
   })
   .catch((error) => console.error(error));
