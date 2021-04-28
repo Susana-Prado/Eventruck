@@ -4,6 +4,7 @@ const Foodtruck = require('../models/Foodtruck.model');
 const uploader = require('../configs/cloudinary.config');
 const { resource } = require('../app');
 const Owner = require('../models/Owner.model');
+const Booking = require('../models/Booking.model');
 
 router.get('/register', (req, res) => {
   res.render('foodtruck/register');
@@ -16,10 +17,8 @@ router.post(
     const {
       name,
       description,
-      images,
+      image,
       price,
-      date,
-      availability,
       food,
       drinks,
       bagels,
@@ -50,10 +49,9 @@ router.post(
         Foodtruck.create({
           name,
           description,
-          images,
+          image,
           price,
-          date,
-          availability,
+          date: [],
           food: !!food,
           drinks: !!drinks,
           bagels: !!bagels,
@@ -72,8 +70,12 @@ router.post(
           cakes: !!cakes,
           dessert: !!dessert,
           any: !!any,
-        }).then(() => {
-          res.redirect('/');
+          creator: req.session.currentUser._id,
+        }).then((createdFoodtruck) => {
+          Owner.updateOne({_id: req.session.currentUser._id}, {$addToSet: {foodtrucks: createdFoodtruck._id}}, {new: true})
+          .then(() => {
+            res.redirect('/private/profile-owner');
+          })
         });
       }
     });
@@ -82,7 +84,6 @@ router.post(
 
 router.post('/results', (req, res) => {
   const { type, specialty, price, date } = req.body;
-  console.log(type, specialty, price, date);
   const filterObject = {};
   if (type !== 'any') {
     filterObject[type] = true;
@@ -99,10 +100,8 @@ router.post('/results', (req, res) => {
       filterObject.price = { $gte: lowerPrice, $lte: higherPrice };
     }
   }
-
-  // if(date !== filterObject.date){
-  // filterObject[availability] = true;
-  // }
+  filterObject.date = { $nin: [date] };
+  req.session.resultsDate = date;
 
   Foodtruck.find(filterObject)
     .then((results) => {
@@ -111,23 +110,28 @@ router.post('/results', (req, res) => {
     .catch((error) => console.error(error));
 });
 
-router.get('/:id', (req, res) => {
+router.post('/:id/delete', (req, res) => {
   const { id } = req.params;
-  Foodtruck.findById({ _id: id })
-    .then((foodtruck) => res.render('foodtruck/foodtruck-details', foodtruck))
+  Foodtruck.findByIdAndDelete({_id: id})
+    .then(() => {
+      res.redirect('/');
+    })
     .catch((error) => console.error(error));
 });
 
 router.get('/:id/edit', (req, res) => {
   const { id } = req.params;
   Foodtruck.findById(id)
-    .then((foodtruck) => res.render('foodtruck/foodtruck-edit', { foodtruck }))
+    .then((foodtruck) => { 
+      console.log(foodtruck.food)
+      res.render('foodtruck/foodtruck-edit', { foodtruck })})
     .catch((error) => console.error(error));
 });
 
-router.post('/:id/edit', (req, res) => {
+router.post('/:id/edit', uploader.fields([{ name: 'image', maxCount: 5 }]), (req, res) => {
+  console.log(req.body);
   const { id } = req.params;
-  let { name, description, images, price, date, availability } = req.body;
+  let { name, description, image, price } = req.body;
   const food = req.body.food ? true : false;
   const drinks = req.body.drinks ? true : false;
   const bagels = req.body.bagels ? true : false;
@@ -149,10 +153,8 @@ router.post('/:id/edit', (req, res) => {
   Foodtruck.findByIdAndUpdate(id, {
     name,
     description,
-    images,
+    image,
     price,
-    date,
-    availability,
     food,
     drinks,
     bagels,
@@ -177,15 +179,26 @@ router.post('/:id/edit', (req, res) => {
     .catch((error) => console.error(error));
 });
 
-router.post('/:id', (req, res) => {
+router.post('/:id/book', (req, res) => {
   const { id } = req.params;
-  Foodtruck.findByIdAndDelete(id)
-    .then(() => {
-      res.redirect('/');
+  Foodtruck.updateOne({_id: id}, {$addToSet: {date: req.session.resultsDate}}, {new: true})
+  .then(() => {
+    Booking.create({
+      client: req.session.currentUser._id,
+      foodtruck: id,
+      date: req.session.resultsDate,
+      bookingDate: Date.now(),
     })
     .catch((error) => console.error(error));
+  })
+  .catch((error) => console.error(error));
+})
+
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+  Foodtruck.findById({ _id: id })
+    .then((foodtruck) => res.render('foodtruck/foodtruck-details', foodtruck))
+    .catch((error) => console.error(error));
 });
-
-
 
 module.exports = router;

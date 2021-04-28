@@ -36,7 +36,8 @@ router.post('/client', uploader.single('image'), (req, res) => {
         email,
         password: hashPass,
         image
-      }).then(() => {
+      }).then((user) => {
+        req.session.currentUser = user;
         res.redirect('/private/profile');
       });
     }
@@ -66,15 +67,24 @@ router.post('/owner', uploader.single('image'), (req, res) => {
         image,
         NIF,
         mobilephone,
-      }).then(() => {
-        res.redirect('/private/profile');
+      }).then((user) => {
+        req.session.currentUser = user;
+        res.redirect('/private/profile-owner');
       });
     }
   });
 });
 
 router.get('/login', (req, res) => {
-  res.render('login');
+  if (req.session.currentUser && req.session.currentUser._id) {
+    if (req.session.currentUser.NIF) {
+      res.redirect('/private/profile-owner');
+    } else {
+      res.redirect('/private/profile');
+    }
+  } else {
+    res.render('login');
+  }
 });
 
 router.post('/login', (req, res) => {

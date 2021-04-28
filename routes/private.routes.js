@@ -11,32 +11,35 @@ function isLoggedIn(req, res, next) {
 }
 
 router.get('/profile', isLoggedIn, (req, res) => {
-  res.render('client/profile', { client: req.session.currentUser });
+  Client.findById({_id: req.session.currentUser._id})
+  .then(user => {
+    res.render('client/profile', { client: user });
+  })
 });
 
 router.get('/profile-owner', isLoggedIn, (req, res) => {
-  Owner.findById({_id: req.session.currentUser._id}).populate('foodtrucks').then((user) => {
-    console.log(user)
-    res.render('profile-owner', { owner: user })
+  Owner.findById({_id: req.session.currentUser._id})
+  .populate('foodtrucks')
+  .then(user => {
+    res.render('owner/profile-owner', { owner: user })
   })
 });
 
 router.get('/profile/edit', (req, res) => {
-  res.render('client/client-update-form', { client: req.session.currentUser });
+  Client.findById({_id: req.session.currentUser._id})
+  .then(user => {
+    res.render('client/client-update-form', { client: user });
+  })
 });
 
 router.post('/profile/edit', (req, res) => {
   const id = req.session.currentUser._id;
-  const { username, email, password, image } = req.body;
-  const salt = bcrypt.genSaltSync(saltRounds);
-  const hashPassword = bcrypt.hashSync(password, salt);
-
+  const { username, email, image } = req.body;
   Client.findByIdAndUpdate(id, {
     username,
     email,
-    password: hashPassword,
     image,
-  })
+  }, {new: true})
     .then(() => {
       res.redirect('/private/profile');
     })
@@ -44,45 +47,55 @@ router.post('/profile/edit', (req, res) => {
 });
 
 router.get('/profile-owner/edit', (req, res) => {
-  res.render('owner/owner-update-form', { owner: req.session.currentUser });
+  Owner.findById({_id: req.session.currentUser._id})
+  .populate('foodtrucks')
+  .then(user => {
+    res.render('owner/owner-update-form', { owner: user })
+  })
 });
 
 router.post('/profile-owner/edit', (req, res) => {
   const id = req.session.currentUser._id;
-  const { username, email, password, image, NIF, mobilephone } = req.body;
-  const salt = bcrypt.genSaltSync(saltRounds);
-  const hashPss = bcrypt.hashSync(password, salt);
-
+  const { username, email, image, NIF, mobilephone } = req.body;
   Owner.findByIdAndUpdate(id, {
     username,
     email,
-    password: hashPss,
     image,
     NIF,
     mobilephone,
-  })
+  }, {new: true})
     .then(() => {
       res.redirect('/private/profile-owner');
     })
     .catch((error) => console.error(error));
 });
 
-router.post('/profile', (req, res) => {
+router.post('/profile/delete', (req, res) => {
   const id = req.session.currentUser._id;
-
-  Client.findByIdAndDelete(id)
+  Client.findByIdAndDelete({ _id: id })
     .then(() => {
-      res.redirect('/');
+      req.session.destroy((err) => {
+        if(err){
+          res.redirect('/');
+        } else {
+          res.redirect('/');
+        }
+      })
     })
     .catch((error) => console.error(error));
 });
 
-router.post('/profile-owner', (req, res) => {
+router.post('/profile-owner/delete', (req, res) => {
   const id = req.session.currentUser._id;
-
-  Owner.findByIdAndDelete(id)
+  Owner.findByIdAndDelete({ _id: id })
     .then(() => {
-      res.redirect('/');
+      req.session.destroy((err) => {
+        if(err){
+          res.redirect('/');
+        } else {
+          res.redirect('/');
+        }
+      })
     })
     .catch((error) => console.error(error));
 });
