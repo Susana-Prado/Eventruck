@@ -16,7 +16,6 @@ require('./configs/middleware.config')(app);
 app.locals.title = 'Eventruck - Express';
 
 // Configs
-require('./configs/preformatter.config')(app);
 require('./configs/views.config')(app);
 require('./configs/session.config')(app);
 
