@@ -114,7 +114,7 @@ router.post('/:id/delete', (req, res) => {
   const { id } = req.params;
   Foodtruck.findByIdAndDelete({_id: id})
     .then(() => {
-      res.redirect('/');
+      res.redirect('/private/profile-owner');
     })
     .catch((error) => console.error(error));
 });
