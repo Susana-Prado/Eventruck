@@ -1,14 +1,10 @@
 <h1 class="form-title">I'm {{owner.username}}</h1>
-
 {{!-- <a href="/foodtruck/register">Register a foodtruck</a>
-
 <a href="/private/profile-owner/edit">Edit your profile</a>
 <a href="/auth/logout">Logout</a>
-
 <form action="/private/profile-owner/delete" method="POST">
   <button type="submit">Delete</button>
 </form>
-
 {{#each owner.foodtrucks}}
 <h3>{{this.name}}</h3>
 <h3>{{this.description}}</h3>
@@ -17,8 +13,6 @@
   <button type="submit">Delete foodtruck</button>
 </form>
 {{/each}} --}}
-
-
 <div class="page-content page-container" id="page-content">
   <div class="profile-flex">
     <div class="row container d-flex justify-content-center">
@@ -60,29 +54,23 @@
                     <h6 class="text-muted f-w-400">{{owner.NIF}}</h6>
                   </div>
                 </div>
-
-
                 <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Foodtrucks</h6>
                 <button class="register-btn">
                   <a class="register-ft" href="/foodtruck/register">Register a foodtruck</a>
                 </button>
-
                 {{#each owner.foodtrucks}}
                 <div class="card-profile">
                   <img src="{{this.image}}" class="card-img-top;" alt="foodtruck-image">
                   <div class="card-body">
                     <h5 class="card-title">{{this.name}}</h5>
                     <p class="card-text">{{this.description}}</p>
-
                     <a href="/foodtruck/{{this.id}}/edit">Edit foodtruck details</a>
                     <form action="/foodtruck/{{this.id}}/delete" method="POST">
                       <button class="btn btn-primary" type="submit">Delete foodtruck</button>
                     </form>
-
                   </div>
                 </div>
                 {{/each}}
-
                 <ul class="social-link list-unstyled m-t-40 m-b-10">
                   <li>
                     <a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="facebook"

@@ -26,8 +26,6 @@ router.get('/profile', isLoggedIn, (req, res) => {
         date: DDMMYYYY(item.date),
         bookingDate: DDMMYYYY(item.bookingDate),
       }));
-      console.log(formatBookings);
-
       res.render('client/profile', { client: user, bookings: formatBookings, layout: "layout-user.hbs" });
     })
   })
