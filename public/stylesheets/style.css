@@ -45,12 +45,22 @@ body {
   justify-content: flex-end !important;
 }
 
+.navbar-nav{
+  display: flex;
+  align-items: center;
+}
+
 .nav-link {
   font-size: 20px;
   color: white !important;
   display: block;
   padding: .5rem 1;
   padding-left: 1.5rem !important;
+  margin: 0;
+}
+
+.nav-user:hover{
+  text-decoration: underline;
 }
 
 
@@ -75,7 +85,6 @@ body {
 .nav-user {
   font-size: 20px;
   color: white !important;
-  text-decoration: underline;
   padding-right: 0.5rem;
   padding-left: 0.5rem;
   padding: 0.5rem 1rem;
@@ -267,6 +276,20 @@ select {
 
 .col-form-label {
   width: 200px;
+  color: tomato;
+  font-weight: bold;
+}
+
+.fas{
+  color: tomato;
+}
+
+.far{
+  color: tomato;
+}
+
+.fab{
+  color: tomato;
 }
 
 .col-sm-10 {
@@ -378,6 +401,7 @@ h6 {
 
 .m-b-20 {
   margin-bottom: 20px;
+  color: tomato;
 }
 
 .p-b-5 {
