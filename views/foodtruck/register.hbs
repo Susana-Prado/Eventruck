@@ -1,54 +1,83 @@
-<h1>Register a foodtruck</h1>
+<h1 class="form-title">Register a foodtruck</h1>
 
-<form action="/foodtruck/register" method="POST" enctype="multipart/form-data">
-    <label for="name">Foodtruck name:</label>
-    <input type="text" name="name">
-    <label for="description">Description:</label>
-    <input type="text" name="description">
-    <label for="image">Image:</label>
-    <input type="file" name="image">
-    <label for="price">Price:</label>
-    <input type="text" name="price">
+<div class="form-container">
+    <form class="user-form" enctype="multipart/form-data" action="/foodtruck/register" method="POST">
+        <div class="mb-4">
+            <label for="name" class="col-sm-2 col-form-label">Foodtruck name</label>
+            <div class="col-sm-10">
+                <i class="fas fa-file-signature icon"></i>
+                <input type="text" name="name" class="form-control" id="inputEmail3">
+                </di </div>
+                <div class="mb-4">
+                    <label for="description" class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-10">
+                        <i class="fas fa-file-alt icon"></i>
+                        <input type="text" name="description" class="form-control" id="inputEmail3">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="image" class="col-sm-2 col-form-label">Upload image</label>
+                    <div class="col-sm-10">
+                        <i class="far fa-image icon"></i>
+                        <input type="file" name="image" class="form-control" id="inputPassword3">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="price" class="col-sm-2 col-form-label">Price</label>
+                    <div class="col-sm-10">
+                        <i class="fas fa-euro-sign icon"></i>
+                        <input type="number" name="price" class="form-control" id="inputPassword3">
+                    </div>
+                </div>
+                <div class="mb-4">
 
-    <h3>Preferences:</h3>
-    <label for="food">Food</label>
-    <input type="checkbox" name="food">
-    <label for="drinks">Drinks</label>
-    <input type="checkbox" name="drinks">
-    
-    <h3>Type of food:</h3>
-    <label for="bagels">Bagels</label>
-    <input type="checkbox" name="bagels">
-    <label for="sandwiches">Sandwiches</label>
-    <input type="checkbox" name="sandwiches">
-    <label for="burritos">Burritos</label>
-    <input type="checkbox" name="burritos">
-    <label for="crepes">Crepes</label>
-    <input type="checkbox" name="crepes">
-    <label for="hamburgers">Hamburgers</label>
-    <input type="checkbox" name="hamburgers">
-    <label for="pizza">Pizza</label>
-    <input type="checkbox" name="pizza">
-    <label for="sushi">Sushi</label>
-    <input type="checkbox" name="sushi">
-    <label for="smoothies">Smoothies</label>
-    <input type="checkbox" name="smoothies">
-    <label for="tea">Tea</label>
-    <input type="checkbox" name="tea">
-    <label for="coffee">Coffee</label>
-    <input type="checkbox" name="coffee">
-    <label for="beer">Beer</label>
-    <input type="checkbox" name="beer">
-    <label for="cocktails">Cocktails</label>
-    <input type="checkbox" name="cocktails">
-    <label for="iceCream">Ice Cream</label>
-    <input type="checkbox" name="iceCream">
-    <label for="cakes">Cakes</label>
-    <input type="checkbox" name="cakes">
-    <label for="dessert">Dessert</label>
-    <input type="checkbox" name="dessert">
-    
-    <button>Register foodtruck</button>
-</form>
+                    <h3>Preferences:</h3>
+                    <div class="preferences">
+                        <label for="food">Food</label>
+                        <input type="checkbox" name="food">
+                        <label for="drinks">Drinks</label>
+                        <input type="checkbox" name="drinks">
+                    </div>
+                </div>
 
-<a href="/auth/profile">Back to profile</a>
+                <div class="mb-4">
+
+                    <h3>Type of food:</h3>
+                    <div class="type-food">
+
+                        <label for="bagels">Bagels</label>
+                        <input type="checkbox" name="bagels">
+                        <label for="sandwiches">Sandwiches</label>
+                        <input type="checkbox" name="sandwiches">
+                        <label for="burritos">Burritos</label>
+                        <input type="checkbox" name="burritos">
+                        <label for="crepes">Crepes</label>
+                        <input type="checkbox" name="crepes">
+                        <label for="hamburgers">Hamburgers</label>
+                        <input type="checkbox" name="hamburgers">
+                        <label for="pizza">Pizza</label>
+                        <input type="checkbox" name="pizza">
+                        <label for="sushi">Sushi</label>
+                        <input type="checkbox" name="sushi">
+                        <label for="smoothies">Smoothies</label>
+                        <input type="checkbox" name="smoothies">
+                        <label for="tea">Tea</label>
+                        <input type="checkbox" name="tea">
+                        <label for="coffee">Coffee</label>
+                        <input type="checkbox" name="coffee">
+                        <label for="beer">Beer</label>
+                        <input type="checkbox" name="beer">
+                        <label for="cocktails">Cocktails</label>
+                        <input type="checkbox" name="cocktails">
+                        <label for="iceCream">Ice Cream</label>
+                        <input type="checkbox" name="iceCream">
+                        <label for="cakes">Cakes</label>
+                        <input type="checkbox" name="cakes">
+                        <label for="dessert">Dessert</label>
+                        <input type="checkbox" name="dessert">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>
+<a class="back" href="/private/profile-owner">Back to Profile</a>
