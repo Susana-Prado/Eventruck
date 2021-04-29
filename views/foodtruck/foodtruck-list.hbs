@@ -2,12 +2,12 @@
 {{#each foodtrucks}}
 <div class="foodtruck-div">
   <img class="foodtruck-img" src="{{this.image}}" alt="foodtruck-image">
-  <div>
-    <h5>{{this.name}}</h5>
-    <p>{{this.description}}</p>
-    <a href="/foodtruck/{{this.id}}" >Show details</a>
+  <div class="foodtruck-content">
+    <h3>{{this.name}}</h4>
+    <p class="foodtruck-list-text">{{this.description}}</p>
+    <a class="foodtruck-list-link" href="/foodtruck/{{this.id}}" >Show details</a>
     <form action="/foodtruck/{{this.id}}/book" method="POST">
-      <button type="submit">Book</button>
+      <button class="foodtruck-list-book" type="submit">Book</button>
     </form>
   </div>
 </div>

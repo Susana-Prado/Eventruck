@@ -8,6 +8,10 @@
   box-sizing: border-box;
 }
 
+h3{
+  font-family: 'Quicksand', sans-serif;
+}
+
 body,
 html {
   position: relative;
@@ -438,20 +442,9 @@ h6 {
   height: 25%;
   margin-right: 10px;
 }
+
 /*CHOOSE USER */ 
 
-/* FOOTER */
-
-.footer-div {
-  z-index: 1;
-  height: 150px;
-  margin-top: 30px;
-  background-color: white;
-}
-
-.footer-icons {
-  width: 30px;
-}
 /* FOODTRUCK LIST  */
 
 .foodtruck-div{
@@ -465,8 +458,78 @@ h6 {
 
 .foodtruck-img{
   width: 200px;
+  height: 200px;
+  border-radius: 10px 0px 0px 10px;
+  object-fit: cover;
 }
 
+.foodtruck-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 30px;
+}
+
+.foodtruck-list-link{
+  text-decoration: none;
+  color: black;
+}
+
+.foodtruck-list-link:hover {
+  text-decoration: underline;
+  color: #f29263;
+}
+
+.foodtruck-list-book{
+  background-color:#ff9666;
+	border-radius:10px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-size:15px;
+	padding:5px 30px;
+	text-decoration:none;
+  border: none;
+}
+
+.foodtruck-list-book:hover{
+  background-color: black;
+  color: white;
+}
+
+.foodtruck-list-text{
+  font-family: 'Montserrat', sans-serif;
+  font-size: 17px;
+}
+
+/* FOODTRUCK DETAILS */
+
+.foodtruck-details{
+  background: white;
+  border-radius: 10px;
+  box-shadow: rgb(0 0 0 / 17%) 0 6px 12px 0;
+}
+
+.foodtruck-details-p{
+  margin-left: 50px;
+}
+
+.foodtruck-details-h1{
+}
+
+.foodtruck-details-div{
+  display: flex;
+  flex-direction: row;
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+.foodtruck-details-img{
+  width: 500px;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 10px;
+}
 /* FOOTER */
 
 footer{
