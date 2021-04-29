@@ -405,6 +405,19 @@ h6 {
   border: none;
 }
 
+.card-profile{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+}
+
+.card-profile img{
+  width: 25%;
+  height: 25%;
+  margin-right: 10px;
+}
+
 /* FOOTER */
 
 .footer-div {
