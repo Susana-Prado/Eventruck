@@ -29,13 +29,12 @@
         <div class="navbar-nav">
           {{#if user.NIF}}
             <a class="nav-link" href="/private/profile-owner">
-              <i class="fas fa-user"></i>
-            </a>
             <p class="nav-user">Hi, {{user.username}}</p>
+            </a>
             <a class="nav-link" href="/auth/logout">Log out</a>
           {{else}}
-            <p class="nav-user">Hi, {{user.username}}</p>
             <a class="nav-link" href="/private/profile">
+            <p class="nav-user">Hi, {{user.username}}</p>
             </a>
             <a class="nav-link" href="/auth/logout">Log out</a>
           {{/if}}

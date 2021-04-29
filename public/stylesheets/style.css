@@ -49,15 +49,46 @@ body {
   justify-content: flex-end !important;
 }
 
+.navbar-nav{
+  display: flex;
+  align-items: center;
+}
+
 .nav-link {
   font-size: 20px;
   color: white !important;
+  display: block;
+  padding: .5rem 1;
+  padding-left: 1.5rem !important;
+  margin: 0;
+}
+
+.nav-user:hover{
+  text-decoration: underline;
+}
+
+
+.nav-link-active{
+  font-size: 20px;
+  background-color: tomato;
+  color: white;
+  padding-right: .5rem;
+  padding-left: .5rem;
+  display: block;
+  padding: .5rem 1rem;
+  text-decoration: none;
+  border: 1px solid white;
+  border-radius: 10px;
+}
+
+.nav-link-active:hover{
+  background-color: white;
+  color: tomato;
 }
 
 .nav-user {
   font-size: 20px;
   color: white !important;
-  text-decoration: underline;
   padding-right: 0.5rem;
   padding-left: 0.5rem;
   padding: 0.5rem 1rem;
@@ -249,6 +280,20 @@ select {
 
 .col-form-label {
   width: 200px;
+  color: tomato;
+  font-weight: bold;
+}
+
+.fas{
+  color: tomato;
+}
+
+.far{
+  color: tomato;
+}
+
+.fab{
+  color: tomato;
 }
 
 .col-sm-10 {
@@ -360,6 +405,7 @@ h6 {
 
 .m-b-20 {
   margin-bottom: 20px;
+  color: tomato;
 }
 
 .p-b-5 {
@@ -444,6 +490,67 @@ h6 {
 }
 
 /*CHOOSE USER */ 
+
+.signup-card{
+  display: flex;
+  justify-content: space-evenly;
+  margin: 50px;
+}
+
+.card-register{
+    width: 25%;
+    
+}
+
+.card-body{
+  padding: 2rem;
+  box-shadow: rgb(0 0 0 / 17%) 0 6px 12px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.sign-title{
+  color: tomato;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+ul {
+  border-top: 1px solid gray;
+  padding-top: 20px;
+  list-style: none;
+  margin-bottom: 20px;
+	margin-left: 10px;
+}
+
+.card-text{
+  padding-left: 0;
+}
+
+.card-text li{
+  padding: 10px 0;
+}
+
+.card-text i{
+  color: tomato;
+  margin-right: 20px;
+}
+
+
+
+
+
+
+/* FOOTER */
+
+.footer-div {
+  z-index: 1;
+  height: 150px;
+  margin-top: 30px;
+  background-color: white;
+}
 
 /* FOODTRUCK LIST  */
 
