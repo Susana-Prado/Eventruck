@@ -1,16 +1,50 @@
-<h1>Edit your profile</h1>
+<h1 class="form-title">Edit your profile</h1>
 
-<form action="/private/profile-owner/edit" method="POST">
-    <label for="username">Username:</label>
-    <input type="text" name="username" value="{{owner.username}}">
-    <label for="email">Email:</label>
-    <input type="text" name="email" value="{{owner.email}}">
-    <label for="image">Upload a profile image:</label>
-    <input type="file" name="image" value="{{owner.image}}">
-    <label for="NIF">NIF:</label>
-    <input type="text" name="NIF" value="{{owner.NIF}}">
-    <label for="mobilephone">Mobilephone:</label>
-    <input type="text" name="mobilephone" value="{{owner.mobilephone}}">
 
-    <button class="submit">Update</button>
-</form>
+<div class="form-container">
+    <form class="user-form" action="/private/profile-owner/edit" method="POST" enctype="multipart/form-data">
+        <div class="row mb-3">
+            <label for="username" class="col-sm-2 col-form-label">Username</label>
+            <div class="col-sm-10">
+                <i class="fas fa-user icon"></i>
+                <input type="text" name="username" class="form-control" id="inputEmail3" value="{{owner.username}}">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="email" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+                <i class="fas fa-envelope icon"></i>
+                <input type="email" name="email" class="form-control" id="inputEmail3" value="{{owner.email}}">
+            </div>
+        </div>
+        <div class="mb-4">
+            <label for="image" class="col-sm-2 col-form-label">Upload a profile image:</label>
+            <div class="col-sm-10">
+                <i class="fas fa-image icon"></i>
+                <input type="file" name="image" class="form-control" id="inputPassword3" value="{{owner.image}}">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="NIF" class="col-sm-2 col-form-label">NIF</label>
+            <div class="col-sm-10">
+                <i class="fas fa-id-card icon"></i>
+                <input type="text" name="NIF" class="form-control" id="inputPassword3" value="{{owner.NIF}}">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="mobilephone" class="col-sm-2 col-form-label">Mobilephone</label>
+            <div class="col-sm-10">
+                <i class="fas fa-phone-square-alt icon"></i>
+                <input type="tel" name="mobilephone" class="form-control" id="inputPassword3" value="{{owner.mobilephone}}">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+    
+</div>
+
+
+
+
+<a class="back" href="/private/profile-owner">Back to Profile</a>
