@@ -2,8 +2,13 @@
 <h1>{{client.username}}</h1>
 
 <a href="/private/profile/edit">Edit your profile</a>
-<a href="/auth/logout">Logout</a>
 
 <form action="/private/profile/delete" method="POST">
     <button type="submit">Delete user</button>
 </form>
+
+{{#each bookings}}
+    <p>{{this.foodtruck.name}}</p>
+    <p>{{this.foodtruck.description}}</p>
+    <p>{{this.date}}</p>
+{{/each}}

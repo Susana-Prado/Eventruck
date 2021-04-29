@@ -7,7 +7,7 @@ const Owner = require('../models/Owner.model');
 const Booking = require('../models/Booking.model');
 
 router.get('/register', (req, res) => {
-  res.render('foodtruck/register');
+  res.render('foodtruck/register', { layout: "layout-user.hbs" } );
 });
 
 router.post(
@@ -44,6 +44,7 @@ router.post(
       if (foodtruck) {
         res.render('foodtruck/register', {
           errorMessage: 'Foodtruck already registered',
+          layout: "layout-user.hbs",
         });
       } else {
         Foodtruck.create({
@@ -105,7 +106,11 @@ router.post('/results', (req, res) => {
 
   Foodtruck.find(filterObject)
     .then((results) => {
-      res.render('foodtruck/foodtruck-list', { foodtrucks: results });
+      if(req.session.currentUser && req.session.currentUser._id){
+        res.render('foodtruck/foodtruck-list', { foodtrucks: results, layout: "layout-user.hbs" });
+      } else {
+        res.render('foodtruck/foodtruck-list', { foodtrucks: results });
+      }
     })
     .catch((error) => console.error(error));
 });
@@ -124,7 +129,7 @@ router.get('/:id/edit', (req, res) => {
   Foodtruck.findById(id)
     .then((foodtruck) => { 
       console.log(foodtruck.food)
-      res.render('foodtruck/foodtruck-edit', { foodtruck })})
+      res.render('foodtruck/foodtruck-edit', { foodtruck, layout: "layout-user.hbs" })})
     .catch((error) => console.error(error));
 });
 
@@ -189,6 +194,10 @@ router.post('/:id/book', (req, res) => {
       date: req.session.resultsDate,
       bookingDate: Date.now(),
     })
+    .then((reservation) => {
+      console.log(reservation);
+      res.redirect('/private/profile');
+    })
     .catch((error) => console.error(error));
   })
   .catch((error) => console.error(error));
@@ -197,7 +206,13 @@ router.post('/:id/book', (req, res) => {
 router.get('/:id', (req, res) => {
   const { id } = req.params;
   Foodtruck.findById({ _id: id })
-    .then((foodtruck) => res.render('foodtruck/foodtruck-details', foodtruck))
+    .then((foodtruck) => {
+      if(req.session.currentUser && req.session.currentUser._id){
+        res.render('foodtruck/foodtruck-details', { foodtruck, layout: "layout-user.hbs" });
+      } else {
+        res.render('foodtruck/foodtruck-details', { foodtruck });
+      }
+    })
     .catch((error) => console.error(error));
 });
 

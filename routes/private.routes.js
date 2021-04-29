@@ -3,7 +3,13 @@ const router = express.Router();
 const Client = require('../models/Client.model');
 const Owner = require('../models/Owner.model');
 const bcrypt = require('bcryptjs');
+const Booking = require('../models/Booking.model');
 const saltRounds = 10;
+
+function DDMMYYYY(date) {
+  const d = new Date(date);
+  return `${date.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+}
 
 function isLoggedIn(req, res, next) {
   if (req.session.currentUser) next();
@@ -13,7 +19,17 @@ function isLoggedIn(req, res, next) {
 router.get('/profile', isLoggedIn, (req, res) => {
   Client.findById({_id: req.session.currentUser._id})
   .then(user => {
-    res.render('client/profile', { client: user });
+    Booking.find({ client: req.session.currentUser._id }).populate('foodtruck')
+    .then((bookings) => {
+      const formatBookings = bookings.map(item => ({
+        foodtruck: item.foodtruck,
+        date: DDMMYYYY(item.date),
+        bookingDate: DDMMYYYY(item.bookingDate),
+      }));
+      console.log(formatBookings);
+
+      res.render('client/profile', { client: user, bookings: formatBookings, layout: "layout-user.hbs" });
+    })
   })
 });
 
@@ -21,14 +37,14 @@ router.get('/profile-owner', isLoggedIn, (req, res) => {
   Owner.findById({_id: req.session.currentUser._id})
   .populate('foodtrucks')
   .then(user => {
-    res.render('owner/profile-owner', { owner: user })
+    res.render('owner/profile-owner', { owner: user, layout: "layout-user.hbs" })
   })
 });
 
 router.get('/profile/edit', (req, res) => {
   Client.findById({_id: req.session.currentUser._id})
   .then(user => {
-    res.render('client/client-update-form', { client: user });
+    res.render('client/client-update-form', { client: user, layout: "layout-user.hbs" });
   })
 });
 
@@ -50,7 +66,7 @@ router.get('/profile-owner/edit', (req, res) => {
   Owner.findById({_id: req.session.currentUser._id})
   .populate('foodtrucks')
   .then(user => {
-    res.render('owner/owner-update-form', { owner: user })
+    res.render('owner/owner-update-form', { owner: user, layout: "layout-user.hbs" })
   })
 });
 

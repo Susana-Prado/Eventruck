@@ -1,50 +1,71 @@
-<form action="/foodtruck/results" method="POST">
-  <div class="foodtruck-search">
-    <div class="search-element">
-      <label class="search-label">Type</label>
-      <select name="type">
-        <option value="any">Any</option>
-        <option value="food">Food</option>
-        <option value="drinks">Drinks</option>
-        <option value="food-drinks">Food and Drinks</option>
-      </select>
+<div class="background-layer"></div>
+<section id="section-one">
+  <form class="index-form" action="/foodtruck/results" method="POST">
+    <div class="foodtruck-search">
+      <div class="search-element">
+        <label class="search-label">Type</label>
+        <select name="type">
+          <option value="any">Any</option>
+          <option value="food">Food</option>
+          <option value="drinks">Drinks</option>
+          <option value="food-drinks">Food and Drinks</option>
+        </select>
+      </div>
+      <div class="search-element">
+        <label class="search-label">Specialty</label>
+        <select name="specialty">
+          <option value="any">Any</option>
+          <option value="bagels">Bagels</option>
+          <option value="sandwiches">Sandwiches</option>
+          <option value="burritos">Burritos</option>
+          <option value="crepes">Crepes</option>
+          <option value="hamburgers">Hamburgers</option>
+          <option value="pizza">Pizza</option>
+          <option value="sushi">Sushi</option>
+          <option value="smoothies">Smoothies</option>
+          <option value="tea">Tea</option>
+          <option value="coffee">Coffee</option>
+          <option value="beer">Beer</option>
+          <option value="cocktails">Cocktails</option>
+          <option value="icecream">Ice Cream</option>
+          <option value="dessert">Dessert</option>
+          <option value="cakes">Cakes</option>
+        </select>
+      </div>
+      <div class="search-element">
+        <label class="search-label">Price</label>
+        <select name="price">
+          <option value="any">Any</option>
+          <option value="0-150">0 - 150€</option>
+          <option value="150-300">150 - 300€</option>
+          <option value="300-450">300 - 450€</option>
+          <option value="450-600">450 - 600€</option>
+          <option value="+600">+600€</option>
+        </select>
+      </div>
+      <div class="search-element">
+        <label class="search-label">When</label>
+        <input class="date" type="date" placeholder="Date" id="date" name="date" required>
+      </div>
+      <button class="search-button" type="submit">Search</button>
     </div>
-    <div class="search-element">
-      <label class="search-label">Specialty</label>
-      <select name="specialty">
-        <option value="any">Any</option>
-        <option value="bagels">Bagels</option>
-        <option value="sandwiches">Sandwiches</option>
-        <option value="burritos">Burritos</option>
-        <option value="crepes">Crepes</option>
-        <option value="hamburgers">Hamburgers</option>
-        <option value="pizza">Pizza</option>
-        <option value="sushi">Sushi</option>
-        <option value="smoothies">Smoothies</option>
-        <option value="tea">Tea</option>
-        <option value="coffee">Coffee</option>
-        <option value="beer">Beer</option>
-        <option value="cocktails">Cocktails</option>
-        <option value="icecream">Ice Cream</option>
-        <option value="dessert">Dessert</option>
-        <option value="cakes">Cakes</option>
-      </select>
+  </form>
+  <div class="info-container">
+    <div>
+      <h1>Rent a foodtruck</h1>
+      <ul>
+        <li>Be nice</li>
+        <li>Be enana</li>
+        <li>Be danielx</li>
+      </ul>
     </div>
-    <div class="search-element">
-      <label class="search-label">Price</label>
-      <select name="price">
-        <option value="any">Any</option>
-        <option value="0-150">0 - 150€</option>
-        <option value="150-300">150 - 300€</option>
-        <option value="300-450">300 - 450€</option>
-        <option value="450-600">450 - 600€</option>
-        <option value="+600">+600€</option>
-      </select>
+    <div>
+      <h1>Have a foodtruck?</h1>
+      <ul>
+        <li>Lady nice</li>
+        <li>Lady enana</li>
+        <li>Lady danielx</li>
+      </ul>
     </div>
-    <div class="search-element">
-      <label class="search-label">When</label>
-      <input class="date" type="date" placeholder="Date" id="date" name="date" required>
-    </div>
-    <button class="search-button" type="submit">Search</button>
   </div>
-</form>
+</section>
