@@ -249,7 +249,7 @@ select {
 }
 
 .info-container > div > h1:hover + ul {
-  min-height: 100px;
+  min-height: 130px;
   max-height: 50%;
   height: auto;
 }
