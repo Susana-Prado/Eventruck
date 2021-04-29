@@ -3,7 +3,11 @@ const router  = express.Router();
 
 /* GET home page */
 router.get('/', (req, res) => {
-    res.render('index', { user: req.user, layout: "layout-user.hbs"});
+  if(req.session.currentUser && req.session.currentUser._id){
+    res.render('index', {user: req.session.currentUser, layout: "layout-user.hbs"});
+  } else {
+    res.render('index', {layout: "layout.hbs"});
+  }
 });
 
 // router.get('/foodtruck-list', (req, res) => {

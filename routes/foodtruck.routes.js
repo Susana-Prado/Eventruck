@@ -7,7 +7,7 @@ const Owner = require('../models/Owner.model');
 const Booking = require('../models/Booking.model');
 
 router.get('/register', (req, res) => {
-  res.render('foodtruck/register', { layout: "layout-user.hbs" } );
+  res.render('foodtruck/register', { user: req.session.currentUser, layout: "layout-user.hbs" } );
 });
 
 router.post(
@@ -107,7 +107,7 @@ router.post('/results', (req, res) => {
   Foodtruck.find(filterObject)
     .then((results) => {
       if(req.session.currentUser && req.session.currentUser._id){
-        res.render('foodtruck/foodtruck-list', { foodtrucks: results, layout: "layout-user.hbs" });
+        res.render('foodtruck/foodtruck-list', { user: req.session.currentUser, foodtrucks: results, layout: "layout-user.hbs" });
       } else {
         res.render('foodtruck/foodtruck-list', { foodtrucks: results });
       }
@@ -128,7 +128,7 @@ router.get('/:id/edit', (req, res) => {
   const { id } = req.params;
   Foodtruck.findById(id)
     .then((foodtruck) => { 
-      res.render('foodtruck/foodtruck-edit', { foodtruck, layout: "layout-user.hbs" })})
+      res.render('foodtruck/foodtruck-edit', { user: req.session.currentUser, foodtruck, layout: "layout-user.hbs" })})
     .catch((error) => console.error(error));
 });
 
@@ -207,7 +207,7 @@ router.get('/:id', (req, res) => {
   Foodtruck.findById({ _id: id })
     .then((foodtruck) => {
       if(req.session.currentUser && req.session.currentUser._id){
-        res.render('foodtruck/foodtruck-details', { foodtruck, layout: "layout-user.hbs" });
+        res.render('foodtruck/foodtruck-details', { user: req.session.currentUser, foodtruck, layout: "layout-user.hbs" });
       } else {
         res.render('foodtruck/foodtruck-details', { foodtruck });
       }
