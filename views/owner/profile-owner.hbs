@@ -46,15 +46,16 @@
                   <a class="register-ft" href="/foodtruck/register">Register a foodtruck</a>
                 </button>
                 {{#each user.foodtrucks}}
-                <div class="card-profile">
-                  <img src="{{this.image}}" class="card-img-top;" alt="foodtruck-image">
-                  <div class="card-body">
-                    <h5 class="card-title">{{this.name}}</h5>
-                    <p class="card-text">{{this.description}}</p>
-                    <a href="/foodtruck/{{this.id}}/edit">Edit foodtruck details</a>
-                    <form action="/foodtruck/{{this.id}}/delete" method="POST">
-                      <button class="btn btn-primary" type="submit">Delete foodtruck</button>
-                    </form>
+                <div class="foodtruck-div">
+                  <img class="foodtruck-img" src="{{this.image}}" alt="foodtruck-image">
+                  <div class="foodtruck-content">
+                    <h3>{{this.name}}</h4>
+                      <p class="foodtruck-list-text">{{this.description}}</p>
+
+                      <a class="foodtruck-list-link" href="/foodtruck/{{this.id}}/edit">Edit food truck details</a>
+                      <form action="/foodtruck/{{this.id}}/delete" method="POST">
+                        <button class="foodtruck-list-book" type="submit">Delete food truck</button>
+                      </form>
                   </div>
                 </div>
                 {{/each}}
