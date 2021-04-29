@@ -1,18 +1,5 @@
-<h1 class="form-title">I'm {{owner.username}}</h1>
-{{!-- <a href="/foodtruck/register">Register a foodtruck</a>
-<a href="/private/profile-owner/edit">Edit your profile</a>
-<a href="/auth/logout">Logout</a>
-<form action="/private/profile-owner/delete" method="POST">
-  <button type="submit">Delete</button>
-</form>
-{{#each owner.foodtrucks}}
-<h3>{{this.name}}</h3>
-<h3>{{this.description}}</h3>
-<a href="/foodtruck/{{this.id}}/edit">Edit foodtruck details</a>
-<form action="/foodtruck/{{this.id}}/delete" method="POST">
-  <button type="submit">Delete foodtruck</button>
-</form>
-{{/each}} --}}
+<h1 class="form-title">I'm {{user.username}}</h1>
+
 <div class="page-content page-container" id="page-content">
   <div class="profile-flex">
     <div class="row container d-flex justify-content-center">
@@ -21,9 +8,9 @@
           <div class="row m-l-0 m-r-0">
             <div class="col-sm-4 bg-c-lite-green user-profile">
               <div class="card-block text-center text-white">
-                <div class="m-b-25"> <img src="{{owner.image}}" width="200" class="img-radius" alt="User-Profile-Image">
+                <div class="m-b-25"> <img src="{{user.image}}" width="200" class="img-radius" alt="User-Profile-Image">
                 </div>
-                <h6 class="f-w-600">{{owner.username}}</h6>
+                <h6 class="f-w-600">{{user.username}}</h6>
                 <a class="edit" href="/private/profile-owner/edit">
                   <i class="far fa-edit"></i>
                   <p>Edit profile</p>
@@ -39,26 +26,26 @@
                 <div class="row">
                   <div class="col-sm-6">
                     <p class="m-b-10 f-w-600">Email</p>
-                    <h6 class="text-muted f-w-400">{{owner.email}}</h6>
+                    <h6 class="text-muted f-w-400">{{user.email}}</h6>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-sm-6">
                     <p class="m-b-10 f-w-600">Mobilephone</p>
-                    <h6 class="text-muted f-w-400">{{owner.mobilephone}}</h6>
+                    <h6 class="text-muted f-w-400">{{user.mobilephone}}</h6>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-sm-6">
                     <p class="m-b-10 f-w-600">NIF</p>
-                    <h6 class="text-muted f-w-400">{{owner.NIF}}</h6>
+                    <h6 class="text-muted f-w-400">{{user.NIF}}</h6>
                   </div>
                 </div>
                 <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Foodtrucks</h6>
                 <button class="register-btn">
                   <a class="register-ft" href="/foodtruck/register">Register a foodtruck</a>
                 </button>
-                {{#each owner.foodtrucks}}
+                {{#each user.foodtrucks}}
                 <div class="card-profile">
                   <img src="{{this.image}}" class="card-img-top;" alt="foodtruck-image">
                   <div class="card-body">

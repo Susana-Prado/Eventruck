@@ -168,18 +168,39 @@ select {
 .info-container {
   background: white;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  padding: 10px 0px;
   border-radius: 10px;
-  height: 400px;
   width: 87%;
+  min-height: 100px;
+  transition: all 0.5s;
+  box-shadow: rgb(0 0 0 / 17%) 0 6px 12px 0;
+}
+
+.info-container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.info-container > div:first-child {
+  border-bottom: 2px solid tomato;
 }
 
 .info-container > div > ul {
-  display: none;
+  transition: all 0.5s;
+  max-height: 0;
+  min-height: 0;
+  height: 0;
+  overflow: hidden;
 }
 
 .info-container > div > h1:hover + ul {
-  display: block;
+  min-height: 100px;
+  max-height: 50%;
+  height: auto;
 }
 
 /*SIGNUP & LOGIN FORMS*/
@@ -430,4 +451,25 @@ h6 {
 
 .footer-icons {
   width: 30px;
+}
+/* FOODTRUCK LIST  */
+
+.foodtruck-div{
+  margin: 15px 15px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  background: white;
+  box-shadow: rgb(0 0 0 / 17%) 0 6px 12px 0;
+}
+
+.foodtruck-img{
+  width: 200px;
+}
+
+/* FOOTER */
+
+footer{
+  z-index: 1;
+  background: white;
 }

@@ -4,6 +4,7 @@ const Client = require('../models/Client.model');
 const Owner = require('../models/Owner.model');
 const bcrypt = require('bcryptjs');
 const Booking = require('../models/Booking.model');
+const uploader = require('../configs/cloudinary.config');
 const saltRounds = 10;
 
 function DDMMYYYY(date) {
@@ -26,7 +27,7 @@ router.get('/profile', isLoggedIn, (req, res) => {
         date: DDMMYYYY(item.date),
         bookingDate: DDMMYYYY(item.bookingDate),
       }));
-      res.render('client/profile', { client: user, bookings: formatBookings, layout: "layout-user.hbs" });
+      res.render('client/profile', { user, bookings: formatBookings, layout: "layout-user.hbs" });
     })
   })
 });
@@ -35,20 +36,21 @@ router.get('/profile-owner', isLoggedIn, (req, res) => {
   Owner.findById({_id: req.session.currentUser._id})
   .populate('foodtrucks')
   .then(user => {
-    res.render('owner/profile-owner', { owner: user, layout: "layout-user.hbs" })
+    res.render('owner/profile-owner', { user, layout: "layout-user.hbs" })
   })
 });
 
 router.get('/profile/edit', (req, res) => {
   Client.findById({_id: req.session.currentUser._id})
   .then(user => {
-    res.render('client/client-update-form', { client: user, layout: "layout-user.hbs" });
+    res.render('client/client-update-form', { user, layout: "layout-user.hbs" });
   })
 });
 
-router.post('/profile/edit', (req, res) => {
+router.post('/profile/edit', uploader.single('image'), (req, res) => {
   const id = req.session.currentUser._id;
-  const { username, email, image } = req.body;
+  const { username, email } = req.body;
+  const image = req.file.path;
   Client.findByIdAndUpdate(id, {
     username,
     email,
@@ -64,13 +66,14 @@ router.get('/profile-owner/edit', (req, res) => {
   Owner.findById({_id: req.session.currentUser._id})
   .populate('foodtrucks')
   .then(user => {
-    res.render('owner/owner-update-form', { owner: user, layout: "layout-user.hbs" })
+    res.render('owner/owner-update-form', { user, layout: "layout-user.hbs" })
   })
 });
 
-router.post('/profile-owner/edit', (req, res) => {
+router.post('/profile-owner/edit',  uploader.single('image'), (req, res) => {
   const id = req.session.currentUser._id;
-  const { username, email, image, NIF, mobilephone } = req.body;
+  const { username, email, NIF, mobilephone } = req.body;
+  const image = req.file.path;
   Owner.findByIdAndUpdate(id, {
     username,
     email,
