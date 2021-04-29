@@ -12,12 +12,11 @@ router.get('/register', (req, res) => {
 
 router.post(
   '/register',
-  uploader.fields([{ name: 'image', maxCount: 5 }]),
+  uploader.single('image'),
   (req, res) => {
     const {
       name,
       description,
-      image,
       price,
       food,
       drinks,
@@ -38,6 +37,7 @@ router.post(
       dessert,
       any,
     } = req.body;
+    const image = req.file.path;
     Foodtruck.findOne({
       name,
     }).then((foodtruck) => {
