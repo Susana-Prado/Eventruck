@@ -1,26 +1,23 @@
-<h1>This is the login page</h1>
-
+<h1 class="form-title">Log in</h1>
 <div class="form-container">
-
-  <form class="signup" method="POST" action="/auth/login">
-
+  <form class="user-form" method="POST" action="/auth/login">
     <div class="row mb-3">
       <label for="email" class="col-sm-2 col-form-label">Email</label>
       <div class="col-sm-10">
+        <i class="fas fa-envelope icon"></i>
         <input type="email" name="email" class="form-control" id="inputEmail3" required>
       </div>
     </div>
     <div class="row mb-3">
       <label for="inputpassword" class="col-sm-2 col-form-label">Password</label>
       <div class="col-sm-10">
+        <i class="fas fa-lock-open icon"></i>
         <input type="password" name="password" class="form-control" id="inputPassword3" required>
       </div>
     </div>
-
     <button type="submit" class="btn btn-primary">Login</button>
   </form>
 </div>
-
 {{#if errorMessage}}
 <p>{{errorMessage}}</p>
 {{/if}}

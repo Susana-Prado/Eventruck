@@ -12,12 +12,11 @@ router.get('/register', (req, res) => {
 
 router.post(
   '/register',
-  uploader.fields([{ name: 'image', maxCount: 5 }]),
+  uploader.single('image'),
   (req, res) => {
     const {
       name,
       description,
-      image,
       price,
       food,
       drinks,
@@ -38,6 +37,7 @@ router.post(
       dessert,
       any,
     } = req.body;
+    const image = req.file.path;
     Foodtruck.findOne({
       name,
     }).then((foodtruck) => {
@@ -132,9 +132,10 @@ router.get('/:id/edit', (req, res) => {
     .catch((error) => console.error(error));
 });
 
-router.post('/:id/edit', uploader.fields([{ name: 'image', maxCount: 5 }]), (req, res) => {
+router.post('/:id/edit', uploader.single('image'), (req, res) => {
   const { id } = req.params;
-  let { name, description, image, price } = req.body;
+  let { name, description, price } = req.body;
+  const image = req.file.path;
   const food = req.body.food ? true : false;
   const drinks = req.body.drinks ? true : false;
   const bagels = req.body.bagels ? true : false;
