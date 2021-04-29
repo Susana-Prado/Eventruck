@@ -26,7 +26,7 @@ router.get('/profile', isLoggedIn, (req, res) => {
         date: DDMMYYYY(item.date),
         bookingDate: DDMMYYYY(item.bookingDate),
       }));
-      res.render('client/profile', { client: user, bookings: formatBookings, layout: "layout-user.hbs" });
+      res.render('client/profile', { user, bookings: formatBookings, layout: "layout-user.hbs" });
     })
   })
 });
@@ -35,14 +35,14 @@ router.get('/profile-owner', isLoggedIn, (req, res) => {
   Owner.findById({_id: req.session.currentUser._id})
   .populate('foodtrucks')
   .then(user => {
-    res.render('owner/profile-owner', { owner: user, layout: "layout-user.hbs" })
+    res.render('owner/profile-owner', { user, layout: "layout-user.hbs" })
   })
 });
 
 router.get('/profile/edit', (req, res) => {
   Client.findById({_id: req.session.currentUser._id})
   .then(user => {
-    res.render('client/client-update-form', { client: user, layout: "layout-user.hbs" });
+    res.render('client/client-update-form', { user, layout: "layout-user.hbs" });
   })
 });
 
@@ -64,7 +64,7 @@ router.get('/profile-owner/edit', (req, res) => {
   Owner.findById({_id: req.session.currentUser._id})
   .populate('foodtrucks')
   .then(user => {
-    res.render('owner/owner-update-form', { owner: user, layout: "layout-user.hbs" })
+    res.render('owner/owner-update-form', { user, layout: "layout-user.hbs" })
   })
 });
 

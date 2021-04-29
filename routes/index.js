@@ -4,9 +4,9 @@ const router  = express.Router();
 /* GET home page */
 router.get('/', (req, res) => {
   if(req.session.currentUser && req.session.currentUser._id){
-    res.render('index', {layout: "layout-user.hbs"});
+    res.render('index', {user: req.session.currentUser, layout: "layout-user.hbs"});
   } else {
-    res.render('index');
+    res.render('index', {layout: "layout.hbs"});
   }
 });
 
