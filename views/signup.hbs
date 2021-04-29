@@ -1,4 +1,32 @@
-<h1>This is the signup page</h1>
-<a href="/auth/client">Register as a client</a>
-<a href="/auth/owner">Register as a food truck owner</a>
-<a href="/">Back</a>
+<h1 class="form-title">Sign up as client or owner</h1>
+
+<div class="signup-card">
+  <div class="col-sm-6 card-register">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="sign-title">Sign up as client</h5>
+        <ul class="card-text">
+          <li><i class="fas fa-check"></i>Get foodtrucks for your events</li>
+          <li><i class="fas fa-check"></i>Booking request</li>
+          <li><i class="fas fa-check"></i>Exclusive offers</li>
+        </ul>
+        <a href="/auth/client" class="btn btn-primary">Sign up</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 card-register">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="sign-title">Sign up as a food truck owner</h5>
+        <ul class="card-text">
+          <li><i class="fas fa-check"></i>Make your food trucks known</li>
+          <li><i class="fas fa-check"></i>Receive booking requests</li>
+          <li><i class="fas fa-check"></i>Manage your bookings</li>
+        </ul>
+        <a href="/auth/owner" class="btn btn-primary">Sign up</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a class="back" href="/">Back</a>
