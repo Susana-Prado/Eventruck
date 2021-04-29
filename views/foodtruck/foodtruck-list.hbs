@@ -1,11 +1,11 @@
-<h1>This is the foodtruck list!</h1>
+
 {{#each foodtrucks}}
-<div class="card" style="width: 18rem;">
-  <img src="{{this.image}}" class="card-img-top" alt="foodtruck-image">
-  <div class="card-body">
-    <h5 class="card-title">{{this.name}}</h5>
-    <p class="card-text">{{this.description}}</p>
-    <a href="/foodtruck/{{this.id}}" class="btn btn-primary">Show details</a>
+<div class="foodtruck-div">
+  <img class="foodtruck-img" src="{{this.image}}" alt="foodtruck-image">
+  <div>
+    <h5>{{this.name}}</h5>
+    <p>{{this.description}}</p>
+    <a href="/foodtruck/{{this.id}}" >Show details</a>
     <form action="/foodtruck/{{this.id}}/book" method="POST">
       <button type="submit">Book</button>
     </form>
