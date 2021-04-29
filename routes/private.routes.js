@@ -4,6 +4,7 @@ const Client = require('../models/Client.model');
 const Owner = require('../models/Owner.model');
 const bcrypt = require('bcryptjs');
 const Booking = require('../models/Booking.model');
+const uploader = require('../configs/cloudinary.config');
 const saltRounds = 10;
 
 function DDMMYYYY(date) {
@@ -46,9 +47,10 @@ router.get('/profile/edit', (req, res) => {
   })
 });
 
-router.post('/profile/edit', (req, res) => {
+router.post('/profile/edit', uploader.single('image'), (req, res) => {
   const id = req.session.currentUser._id;
-  const { username, email, image } = req.body;
+  const { username, email } = req.body;
+  const image = req.file.path;
   Client.findByIdAndUpdate(id, {
     username,
     email,
@@ -68,9 +70,10 @@ router.get('/profile-owner/edit', (req, res) => {
   })
 });
 
-router.post('/profile-owner/edit', (req, res) => {
+router.post('/profile-owner/edit',  uploader.single('image'), (req, res) => {
   const id = req.session.currentUser._id;
-  const { username, email, image, NIF, mobilephone } = req.body;
+  const { username, email, NIF, mobilephone } = req.body;
+  const image = req.file.path;
   Owner.findByIdAndUpdate(id, {
     username,
     email,
