@@ -21,19 +21,18 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          {{#if client}}
-          <p class="nav-user">Hi, {{client.username}}</p>
-          <a class="nav-link" href="/private/profile">
-            <i class="fas fa-user"></i>
-          </a>
-          <a class="nav-link" href="/auth/logout">Log out</a>
-          {{/if}}
-          {{#if owner}}
-          <a class="nav-link" href="/private/profile-owner">
-            <i class="fas fa-user"></i>
-          </a>
-          <p class="nav-user">Hi, {{owner.username}}</p>
-          <a class="nav-link" href="/auth/logout">Log out</a>
+          {{#if user.NIF}}
+            <a class="nav-link" href="/private/profile-owner">
+              <i class="fas fa-user"></i>
+            </a>
+            <p class="nav-user">Hi, {{user.username}}</p>
+            <a class="nav-link" href="/auth/logout">Log out</a>
+          {{else}}
+            <p class="nav-user">Hi, {{user.username}}</p>
+            <a class="nav-link" href="/private/profile">
+              <i class="fas fa-user"></i>
+            </a>
+            <a class="nav-link" href="/auth/logout">Log out</a>
           {{/if}}
         </div>
       </div>
@@ -45,4 +44,19 @@
     integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
     crossorigin="anonymous"></script>
 </body>
+
+<!-- Footer -->
+<footer class="page-footer font-small blue">
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2021 Copyright:
+    <a href="/"> eventruck.com</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
+</html>
+
 </html>
