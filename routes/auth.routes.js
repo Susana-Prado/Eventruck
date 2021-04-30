@@ -46,10 +46,10 @@ router.post('/client', uploader.single('image'), (req, res) => {
           html: `<h2>Welcome to Eventruck, ${username}!</h2><p>Thank you for using our platform</p>`,
         })
         .then(() => {
-          res.redirect('/private/profile');
+          res.redirect('/');
         })
         .catch(error => {
-          res.redirect('/private/profile');
+          res.redirect('/');
         })
       });
     }
@@ -89,10 +89,10 @@ router.post('/owner', uploader.single('image'), (req, res) => {
           html: `<h2>Welcome to Eventruck, ${username}!</h2><p>Thank you for using our platform</p>`,
         })
         .then(() => {
-          res.redirect('/private/profile');
+          res.redirect('/');
         })
         .catch(error => {
-          res.redirect('/private/profile');
+          res.redirect('/');
         })
       });
     }
@@ -147,7 +147,7 @@ router.post('/login', (req, res) => {
       const passwordCorrect = bcrypt.compareSync(password, client.password);
       if (passwordCorrect) {
         req.session.currentUser = client;
-        res.redirect('/private/profile');
+        res.redirect('/');
       } else {
         res.render('login', {
           errorMessage: 'Incorrect email or password',

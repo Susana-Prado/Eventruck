@@ -21,6 +21,16 @@ html {
   height: 100%;
 }
 
+.btn{
+  background-color: rgb(95, 95, 95);
+  border:none;
+}
+
+.btn:hover{
+  background-color: white;
+  color: tomato;
+}
+
 body {
   background: HSLA(0, 0%, 96%, 1);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
@@ -160,6 +170,7 @@ select {
 }
 
 .search-button {
+  font-size: 20px !important;
   display: flex;
   flex-grow: 1;
   height: 100%;
@@ -509,6 +520,15 @@ h6 {
   margin-right: 10px;
 }
 
+.profile-ft-img{
+  width: 40%  !important;
+  border-radius: 10px 0px 0px 10px;
+  object-fit: cover;
+}
+
+.foodtruck-button-delete{
+
+}
 /*CHOOSE USER */ 
 
 .signup-card{
