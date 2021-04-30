@@ -103,6 +103,7 @@ body {
 
 .index-form {
   width: 100%;
+  display: flex;
 }
 
 .foodtruck-search {
@@ -117,12 +118,10 @@ body {
 }
 
 .search-element {
-  display: flex;
-  flex-grow: 2;
-  flex-direction: column;
   border-right: 1px solid rgba(10, 10, 10, 0.1);
   padding: 1em;
 }
+
 
 .search-label {
   font-weight: 700;
@@ -144,6 +143,16 @@ select {
   margin-top: 5px;
   padding: 10px;
 }
+
+.date{
+  display: flex;
+  border: 1px solid grey;
+  width: 100%;
+  line-height: 1.2em;
+  margin-top: 5px;
+  padding: 10px;
+}
+
 
 .date {
   height: 42px;
@@ -528,16 +537,14 @@ h6 {
   margin-bottom: 20px;
 }
 
-ul {
+.card-text{
   padding-top: 20px;
   margin-bottom: 20px;
 	margin-left: 10px;
-  list-style-type:decimal;
-}
-
-.card-text{
+  list-style: none  !important;
   padding-left: 0;
 }
+
 
 .card-text li{
   padding: 10px 0;
@@ -547,10 +554,6 @@ ul {
   color: tomato;
   margin-right: 20px;
 }
-
-
-
-
 
 
 /* FOOTER */
