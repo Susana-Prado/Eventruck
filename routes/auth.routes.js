@@ -20,8 +20,8 @@ router.post('/client', uploader.single('image'), (req, res) => {
     username,
     email,
     password,
-    image
   } = req.body;
+  const image = req.file.path;
   Client.findOne({
     username,
   }).then((client) => {
@@ -61,7 +61,8 @@ router.get('/owner', (req, res) => {
 });
 
 router.post('/owner', uploader.single('image'), (req, res) => {
-  const { username, email, password, image, NIF, mobilephone } = req.body;
+  const { username, email, password, NIF, mobilephone } = req.body;
+  const image = req.file.path;
   Owner.findOne({
     username,
   }).then((owner) => {
