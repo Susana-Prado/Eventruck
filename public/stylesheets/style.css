@@ -532,7 +532,7 @@ ul {
   padding-top: 20px;
   margin-bottom: 20px;
 	margin-left: 10px;
-  list-style-type:decimal;
+  list-style: none;
 }
 
 .card-text{
