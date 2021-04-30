@@ -6,9 +6,11 @@
     <h3>{{this.name}}</h4>
     <p class="foodtruck-list-text">{{this.description}}</p>
     <a class="foodtruck-list-link" href="/foodtruck/{{this.id}}" >Show details</a>
-    <form action="/foodtruck/{{this.id}}/book" method="POST">
-      <button class="foodtruck-list-book" type="submit">Book</button>
-    </form>
+    {{#if ../user}}
+      <form action="/foodtruck/{{this.id}}/book" method="POST">
+        <button class="foodtruck-list-book" type="submit">Book</button>
+      </form>
+    {{/if}}
   </div>
 </div>
 {{/each}}
