@@ -3,5 +3,11 @@
     <div class="foodtruck-details-div">
         <img class="foodtruck-details-img" src="{{foodtruck.image}}" alt="foodtruck-image">
         <p class="foodtruck-details-text">{{foodtruck.description}}</p>
+        <p class="foodtruck-details-text">Price: {{foodtruck.price}} €</p>
     </div>
+     {{#if user}}
+      <form action="/foodtruck/{{this.id}}/book" method="POST">
+        <button class="foodtruck-list-book" type="submit">Book</button>
+      </form>
+    {{/if}}
 </div>
