@@ -4,6 +4,7 @@ const Client = require('../models/Client.model');
 const Owner = require('../models/Owner.model');
 const bcrypt = require('bcryptjs');
 const uploader = require('../configs/cloudinary.config');
+const transporter = require('../configs/nodemailer.config');
 const saltRounds = 10;
 
 router.get('/', (req, res) => {
@@ -38,7 +39,18 @@ router.post('/client', uploader.single('image'), (req, res) => {
         image
       }).then((user) => {
         req.session.currentUser = user;
-        res.redirect('/private/profile');
+        transporter.sendMail({
+          from: "Contact <eventruckinfo@gmail.com",
+          to: email,
+          subject: "Welcome to Eventruck!",
+          html: `<h2>Welcome to Eventruck, ${username}!</h2><p>Thank you for using our platform</p>`,
+        })
+        .then(() => {
+          res.redirect('/private/profile');
+        })
+        .catch(error => {
+          res.redirect('/private/profile');
+        })
       });
     }
   });
