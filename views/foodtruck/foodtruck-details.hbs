@@ -1,13 +1,15 @@
 <div class="foodtruck-details">
-    <h1 class="foodtruck-details-h1">{{foodtruck.name}}</h1>
-    <div class="foodtruck-details-div">
-        <img class="foodtruck-details-img" src="{{foodtruck.image}}" alt="foodtruck-image">
-        <p class="foodtruck-details-text">{{foodtruck.description}}</p>
-        <p class="foodtruck-details-text">Price: {{foodtruck.price}} €</p>
-    </div>
-     {{#if user}}
-      <form action="/foodtruck/{{this.id}}/book" method="POST">
+  <h1 class="foodtruck-details-h1">{{foodtruck.name}}</h1>
+  <div class="foodtruck-details-div">
+    <img class="foodtruck-details-img" src="{{foodtruck.image}}" alt="foodtruck-image">
+    <div>
+      <p class="foodtruck-details-text">{{foodtruck.description}}</p>
+      <p class="foodtruck-details-text">Price: {{foodtruck.price}} €</p>
+      {{#if user}}
+      <form class="foodtruck-details-text" action="/foodtruck/{{this.id}}/book" method="POST">
         <button class="foodtruck-list-book" type="submit">Book</button>
       </form>
-    {{/if}}
+      {{/if}}
+    </div>
+  </div>
 </div>
