@@ -82,7 +82,18 @@ router.post('/owner', uploader.single('image'), (req, res) => {
         mobilephone,
       }).then((user) => {
         req.session.currentUser = user;
-        res.redirect('/private/profile-owner');
+        transporter.sendMail({
+          from: "Contact <eventruckinfo@gmail.com",
+          to: email,
+          subject: "Welcome to Eventruck!",
+          html: `<h2>Welcome to Eventruck, ${username}!</h2><p>Thank you for using our platform</p>`,
+        })
+        .then(() => {
+          res.redirect('/private/profile');
+        })
+        .catch(error => {
+          res.redirect('/private/profile');
+        })
       });
     }
   });
