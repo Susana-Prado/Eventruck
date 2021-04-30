@@ -113,7 +113,6 @@ body {
 
 .index-form {
   width: 100%;
-  display: flex;
 }
 
 .foodtruck-search {
@@ -170,7 +169,8 @@ select {
 }
 
 .search-button {
-  font-size: 20px !important;
+  font-family: 'Poppins', sans-serif;
+  font-size: 25px !important;
   display: flex;
   flex-grow: 1;
   height: 100%;
@@ -191,7 +191,8 @@ select {
 }
 
 .search-button:hover {
-  background-color: HSLA(345, 100%, 60%, 1);
+  background-color: white;
+  color: tomato;
 }
 
 /* Background body */
@@ -244,7 +245,8 @@ select {
 }
 
 .info-container > div {
-  margin-top: 15px;
+  margin-right: 30px;
+  margin-left: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
