@@ -541,7 +541,10 @@ h6 {
   padding-top: 20px;
   margin-bottom: 20px;
 	margin-left: 10px;
-  list-style: none  !important;
+  list-style: none;
+}
+
+.card-text{
   padding-left: 0;
 }
 
