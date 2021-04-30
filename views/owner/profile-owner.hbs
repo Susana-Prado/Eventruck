@@ -47,14 +47,14 @@
                 </button>
                 {{#each user.foodtrucks}}
                 <div class="foodtruck-div">
-                  <img class="foodtruck-img" src="{{this.image}}" alt="foodtruck-image">
+                  <img class="foodtruck-img profile-ft-img" src="{{this.image}}" alt="foodtruck-image">
                   <div class="foodtruck-content">
                     <h3>{{this.name}}</h4>
                       <p class="foodtruck-list-text">{{this.description}}</p>
 
                       <a class="foodtruck-list-link" href="/foodtruck/{{this.id}}/edit">Edit food truck details</a>
                       <form action="/foodtruck/{{this.id}}/delete" method="POST">
-                        <button class="foodtruck-list-book" type="submit">Delete food truck</button>
+                        <button class="foodtruck-list-book foodtruck-button-delete" type="submit">Delete food truck</button>
                       </form>
                   </div>
                 </div>

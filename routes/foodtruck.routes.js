@@ -5,6 +5,7 @@ const uploader = require('../configs/cloudinary.config');
 const { resource } = require('../app');
 const Owner = require('../models/Owner.model');
 const Booking = require('../models/Booking.model');
+const transporter = require('../configs/nodemailer.config');
 
 router.get('/register', (req, res) => {
   res.render('foodtruck/register', { user: req.session.currentUser, layout: "layout-user.hbs" } );
@@ -75,6 +76,12 @@ router.post(
         }).then((createdFoodtruck) => {
           Owner.updateOne({_id: req.session.currentUser._id}, {$addToSet: {foodtrucks: createdFoodtruck._id}}, {new: true})
           .then(() => {
+            transporter.sendMail({
+              from: "Eventruck <eventruckinfo@gmail.com",
+              to: req.session.currentUser.email,
+              subject: "Foodtruck added!",
+              html: `<h2>Thank you for adding ${name} to you foodtrucks!</h2><p>Thank you for using our platform</p>`,
+            });
             res.redirect('/private/profile-owner');
           })
         });
@@ -194,8 +201,13 @@ router.post('/:id/book', (req, res) => {
       bookingDate: Date.now(),
     })
     .then((reservation) => {
-      console.log(reservation);
       res.redirect('/private/profile');
+      transporter.sendMail({
+        from: "Contact <eventruckinfo@gmail.com",
+        to: req.session.currentUser.email,
+        subject: "Booking confirmation, Eventruck.",
+        html: `<h2>You have booked a Foodtruck</h2><p>Thank you for using our platform. Eventruck.</p>`,
+      });
     })
     .catch((error) => console.error(error));
   })
