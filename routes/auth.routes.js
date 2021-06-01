@@ -7,69 +7,68 @@ const uploader = require('../configs/cloudinary.config');
 const transporter = require('../configs/nodemailer.config');
 const saltRounds = 10;
 
-router.get('/', (req, res) => {
-  res.render('signup');
-});
+router.post('/client', (req, res) => {
+  const { username, email, password } = req.body;
 
-router.get('/client', (req, res) => {
-  res.render('signup/client');
-});
+  // const image = req.file.path;
 
-router.post('/client', uploader.single('image'), (req, res) => {
-  const {
-    username,
-    email,
-    password,
-  } = req.body;
-  const image = req.file.path;
-  Client.findOne({
-    username,
-  }).then((client) => {
+  if (password.length < 3) {
+    return res.status(400).json({
+      message: 'Please make your password at least 3 characters long',
+    });
+  }
+
+  if (!username || !email) {
+    return res
+      .status(400)
+      .json({ message: 'Please fill all the fields in the form' });
+  }
+
+  Client.findOne({ username }).then((client) => {
     if (client) {
-      res.render('signup/client', {
-        errorMessage: 'User already exists',
-      });
+      return res.status(400).json({ message: 'User already exists.' });
     } else {
       const salt = bcrypt.genSaltSync(saltRounds);
       const hashPass = bcrypt.hashSync(password, salt);
-      Client.create({
-        username,
-        email,
-        password: hashPass,
-        image
-      }).then((user) => {
-        req.session.currentUser = user;
-        transporter.sendMail({
-          from: "Contact <eventruckinfo@gmail.com",
-          to: email,
-          subject: "Welcome to Eventruck!",
-          html: `<h2>Welcome to Eventruck, ${username}!</h2><p>Thank you for using our platform</p>`,
+      Client.create({ username, email, password: hashPass})
+        .then((user) => {
+          req.session.currentUser = user;
+          transporter.sendMail({
+            from: 'Contact <eventruckinfo@gmail.com',
+            to: email,
+            subject: 'Welcome to Eventruck!',
+            html: `<h2>Welcome to Eventruck, ${username}!</h2><p>Thank you for using our platform</p>`,
+          });
+          return res.status(200).json(user);
         })
-        .then(() => {
-          res.redirect('/');
-        })
-        .catch(error => {
-          res.redirect('/');
-        })
-      });
+        .catch((error) => res.status(500).json(error));
     }
   });
 });
 
-router.get('/owner', (req, res) => {
-  res.render('signup/owner');
-});
-
-router.post('/owner', uploader.single('image'), (req, res) => {
+router.post('/owner', (req, res) => {
   const { username, email, password, NIF, mobilephone } = req.body;
-  const image = req.file.path;
+  // const image = req.file.path;
+
+  if (password.length < 3) {
+    return res.status(400).json({
+      message: 'Please make your password at least 3 characters long',
+    });
+  }
+
+  if (!username || !email) {
+    return res
+      .status(400)
+      .json({ message: 'Please fill all the fields in the form' });
+  }
+
   Owner.findOne({
     username,
   }).then((owner) => {
     if (owner) {
-      res.render('signup/owner', {
-        errorMessage: 'User already exists',
-      });
+      return res
+        .status(400)
+        .json({ message: 'User already exists. Please change your email' });
     } else {
       const salt = bcrypt.genSaltSync(saltRounds);
       const hashPass = bcrypt.hashSync(password, salt);
@@ -77,47 +76,29 @@ router.post('/owner', uploader.single('image'), (req, res) => {
         username,
         email,
         password: hashPass,
-        image,
         NIF,
         mobilephone,
-      }).then((user) => {
-        req.session.currentUser = user;
-        transporter.sendMail({
-          from: "Contact <eventruckinfo@gmail.com",
-          to: email,
-          subject: "Welcome to Eventruck!",
-          html: `<h2>Welcome to Eventruck, ${username}!</h2><p>Thank you for using our platform</p>`,
+      })
+        .then((user) => {
+          req.session.currentUser = user;
+          transporter.sendMail({
+            from: 'Contact <eventruckinfo@gmail.com',
+            to: email,
+            subject: 'Welcome to Eventruck!',
+            html: `<h2>Welcome to Eventruck, ${username}!</h2><p>Thank you for using our platform</p>`,
+          });
+          return res.status(200).json(user);
         })
-        .then(() => {
-          res.redirect('/');
-        })
-        .catch(error => {
-          res.redirect('/');
-        })
-      });
+        .catch((error) => res.status(500).json(error));
     }
   });
-});
-
-router.get('/login', (req, res) => {
-  if (req.session.currentUser && req.session.currentUser._id) {
-    if (req.session.currentUser.NIF) {
-      res.redirect('/private/profile-owner');
-    } else {
-      res.redirect('/private/profile');
-    }
-  } else {
-    res.render('login');
-  }
 });
 
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    res.render('login', {
-      errorMessage: 'Email and password are required',
-    });
+    return res.status(400).json({ message: 'Email and password are required' });
   }
 
   Client.findOne({
@@ -128,18 +109,16 @@ router.post('/login', (req, res) => {
         email,
       }).then((owner) => {
         if (!owner) {
-          res.render('login', {
-            errorMessage: 'Incorrect email or password',
-          });
+          return res
+            .status(400)
+            .json({ message: 'Incorrect email or password' });
         } else {
           const passwordCorrect = bcrypt.compareSync(password, owner.password);
           if (passwordCorrect) {
             req.session.currentUser = owner;
-            res.redirect('/private/profile-owner');
+            return res.status(200).json(owner);
           } else {
-            res.render('login', {
-              errorMessage: 'Incorrect email or password',
-            });
+            res.status(400).json({ message: 'Incorrect email or password' });
           }
         }
       });
@@ -147,22 +126,20 @@ router.post('/login', (req, res) => {
       const passwordCorrect = bcrypt.compareSync(password, client.password);
       if (passwordCorrect) {
         req.session.currentUser = client;
-        res.redirect('/');
+        return res.status(200).json(client);
       } else {
-        res.render('login', {
-          errorMessage: 'Incorrect email or password',
-        });
+        res.status(400).json({ message: 'Incorrect email or password' });
       }
     }
   });
 });
 
-router.get('/logout', (req, res) => {
+router.post('/logout', (req, res) => {
   req.session.destroy((err) => {
     if (err) {
-      res.redirect('/');
+      res.status(400).json({ message: 'Error logout' });
     } else {
-      res.redirect('/');
+      res.status(200).json({ message: 'Log out success!' });
     }
   });
 });

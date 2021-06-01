@@ -9,7 +9,7 @@ const transporter = require('../configs/nodemailer.config');
 
 router.post(
   '/register',
-  uploader.single('image'),
+  // uploader.single('image'),
   (req, res) => {
     const {
       name,
@@ -34,7 +34,7 @@ router.post(
       dessert,
       any,
     } = req.body;
-    const image = req.file.path;
+    // const image = req.file ? req.file.path : null;
     Foodtruck.findOne({
       name,
     }).then((foodtruck) => {
@@ -46,7 +46,7 @@ router.post(
         Foodtruck.create({
           name,
           description,
-          image,
+          // image,
           price,
           date: [],
           food: !!food,
@@ -108,36 +108,28 @@ router.post('/results', (req, res) => {
 
   Foodtruck.find(filterObject)
     .then((results) => {
-      if(req.session.currentUser && req.session.currentUser._id){
-        return res.status(200).json(results);
-      } else {
-        return res.status(200).json(results);
-      }
+      return res.status(200).json(results);
     })
-    .catch(res.status(400).json());
+    .catch(() => {
+      return res.status(400).json();
+    });
 });
 
-router.post('/:id/delete', (req, res) => {
+router.delete('/:id/delete', (req, res) => {
   const { id } = req.params;
   Foodtruck.findByIdAndDelete({_id: id})
     .then(() => {
       return res.status(200).json(id);
     })
-    .catch(res.status(400).json());
+    .catch(() => {
+      return res.status(400).json();
+    });
 });
 
-router.get('/:id/edit', (req, res) => {
-  const { id } = req.params;
-  Foodtruck.findById(id)
-    .then((foodtruck) => { 
-      return res.status(200).json(foodtruck);})
-    .catch(res.status(400).json());
-});
-
-router.post('/:id/edit', uploader.single('image'), (req, res) => {
+router.put('/:id/edit', (req, res) => {
   const { id } = req.params;
   let { name, description, price } = req.body;
-  const image = req.file.path;
+  // const image = req.file.path;
   const food = req.body.food ? true : false;
   const drinks = req.body.drinks ? true : false;
   const bagels = req.body.bagels ? true : false;
@@ -159,7 +151,7 @@ router.post('/:id/edit', uploader.single('image'), (req, res) => {
   Foodtruck.findByIdAndUpdate(id, {
     name,
     description,
-    image,
+    // image,
     price,
     food,
     drinks,
@@ -178,11 +170,13 @@ router.post('/:id/edit', uploader.single('image'), (req, res) => {
     iceCream,
     cakes,
     dessert,
-  })
-    .then(() => {
-      return res.status(200).json(id);
+  }, {new: true})
+    .then((updatedFoodtruck) => {
+      return res.status(200).json(updatedFoodtruck);
     })
-    .catch(res.status(400).json());
+    .catch(() => {
+      return res.status(400).json();
+    });
 });
 
 router.post('/:id/book', (req, res) => {
@@ -204,22 +198,24 @@ router.post('/:id/book', (req, res) => {
         html: `<h2>You have booked a Foodtruck</h2><p>Thank you for using our platform. Eventruck.</p>`,
       });
     })
-    .catch(res.status(400).json());
+    .catch(() => {
+      return res.status(400).json();
+    });
   })
-  .catch(res.status(400).json());
+  .catch(() => {
+    return res.status(400).json();
+  });
 })
 
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  Foodtruck.findById({ _id: id })
+  Foodtruck.findById(id)
     .then((foodtruck) => {
-      if(req.session.currentUser && req.session.currentUser._id){
-        return res.status(200).json(foodtruck);;
-      } else {
-        res.render('foodtruck/foodtruck-details', { foodtruck });
-      }
+      res.status(200).json(foodtruck);
     })
-    .catch(res.status(400).json());
+    .catch(() => {
+      return res.status(400).json();
+    });
 });
 
 module.exports = router;
