@@ -7,10 +7,6 @@ const Owner = require('../models/Owner.model');
 const Booking = require('../models/Booking.model');
 const transporter = require('../configs/nodemailer.config');
 
-router.get('/register', (req, res) => {
-  res.render('foodtruck/register', { user: req.session.currentUser, layout: "layout-user.hbs" } );
-});
-
 router.post(
   '/register',
   uploader.single('image'),
@@ -43,9 +39,8 @@ router.post(
       name,
     }).then((foodtruck) => {
       if (foodtruck) {
-        res.render('foodtruck/register', {
-          errorMessage: 'Foodtruck already registered',
-          layout: "layout-user.hbs",
+        return res.status(400).json({
+          message: 'Foodtruck already registered',
         });
       } else {
         Foodtruck.create({
@@ -82,7 +77,7 @@ router.post(
               subject: "Foodtruck added!",
               html: `<h2>Thank you for adding ${name} to you foodtrucks!</h2><p>Thank you for using our platform</p>`,
             });
-            res.redirect('/private/profile-owner');
+            res.status(200).json(createdFoodtruck);
           })
         });
       }
@@ -114,29 +109,29 @@ router.post('/results', (req, res) => {
   Foodtruck.find(filterObject)
     .then((results) => {
       if(req.session.currentUser && req.session.currentUser._id){
-        res.render('foodtruck/foodtruck-list', { user: req.session.currentUser, foodtrucks: results, layout: "layout-user.hbs" });
+        return res.status(200).json(results);
       } else {
-        res.render('foodtruck/foodtruck-list', { foodtrucks: results });
+        return res.status(200).json(results);
       }
     })
-    .catch((error) => console.error(error));
+    .catch(res.status(400).json());
 });
 
 router.post('/:id/delete', (req, res) => {
   const { id } = req.params;
   Foodtruck.findByIdAndDelete({_id: id})
     .then(() => {
-      res.redirect('/private/profile-owner');
+      return res.status(200).json(id);
     })
-    .catch((error) => console.error(error));
+    .catch(res.status(400).json());
 });
 
 router.get('/:id/edit', (req, res) => {
   const { id } = req.params;
   Foodtruck.findById(id)
     .then((foodtruck) => { 
-      res.render('foodtruck/foodtruck-edit', { user: req.session.currentUser, foodtruck, layout: "layout-user.hbs" })})
-    .catch((error) => console.error(error));
+      return res.status(200).json(foodtruck);})
+    .catch(res.status(400).json());
 });
 
 router.post('/:id/edit', uploader.single('image'), (req, res) => {
@@ -185,9 +180,9 @@ router.post('/:id/edit', uploader.single('image'), (req, res) => {
     dessert,
   })
     .then(() => {
-      res.redirect(`/foodtruck/${id}`);
+      return res.status(200).json(id);
     })
-    .catch((error) => console.error(error));
+    .catch(res.status(400).json());
 });
 
 router.post('/:id/book', (req, res) => {
@@ -201,7 +196,7 @@ router.post('/:id/book', (req, res) => {
       bookingDate: Date.now(),
     })
     .then((reservation) => {
-      res.redirect('/private/profile');
+      res.status(200).json(reservation);
       transporter.sendMail({
         from: "Contact <eventruckinfo@gmail.com",
         to: req.session.currentUser.email,
@@ -209,9 +204,9 @@ router.post('/:id/book', (req, res) => {
         html: `<h2>You have booked a Foodtruck</h2><p>Thank you for using our platform. Eventruck.</p>`,
       });
     })
-    .catch((error) => console.error(error));
+    .catch(res.status(400).json());
   })
-  .catch((error) => console.error(error));
+  .catch(res.status(400).json());
 })
 
 router.get('/:id', (req, res) => {
@@ -219,12 +214,12 @@ router.get('/:id', (req, res) => {
   Foodtruck.findById({ _id: id })
     .then((foodtruck) => {
       if(req.session.currentUser && req.session.currentUser._id){
-        res.render('foodtruck/foodtruck-details', { user: req.session.currentUser, foodtruck, layout: "layout-user.hbs" });
+        return res.status(200).json(foodtruck);;
       } else {
         res.render('foodtruck/foodtruck-details', { foodtruck });
       }
     })
-    .catch((error) => console.error(error));
+    .catch(res.status(400).json());
 });
 
 module.exports = router;
