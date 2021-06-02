@@ -48,19 +48,13 @@ router.post('/client', uploader.single('image'), (req, res) => {
 
 router.post('/owner', uploader.single('image'), (req, res) => {
   const { username, email, password, NIF, mobilephone } = req.body;
-  const image = req.file.path;
+  //const image = req.file.path;
 
-  if (password.length < 3) {
-    return res.status(400).json({
-      message: 'Please make your password at least 3 characters long',
-    });
-  }
-
-  if (!username || !email) {
-    return res
-      .status(400)
-      .json({ message: 'Please fill all the fields in the form' });
-  }
+  // if (!username || !email) {
+  //   return res
+  //     .status(400)
+  //     .json({ message: 'Please fill all the fields in the form' });
+  // }
 
   Owner.findOne({
     username,
