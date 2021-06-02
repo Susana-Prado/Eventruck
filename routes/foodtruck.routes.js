@@ -7,13 +7,9 @@ const Owner = require('../models/Owner.model');
 const Booking = require('../models/Booking.model');
 const transporter = require('../configs/nodemailer.config');
 
-router.get('/register', (req, res) => {
-  res.render('foodtruck/register', { user: req.session.currentUser, layout: "layout-user.hbs" } );
-});
-
 router.post(
   '/register',
-  uploader.single('image'),
+  // uploader.single('image'),
   (req, res) => {
     const {
       name,
@@ -38,20 +34,19 @@ router.post(
       dessert,
       any,
     } = req.body;
-    const image = req.file.path;
+    // const image = req.file ? req.file.path : null;
     Foodtruck.findOne({
       name,
     }).then((foodtruck) => {
       if (foodtruck) {
-        res.render('foodtruck/register', {
-          errorMessage: 'Foodtruck already registered',
-          layout: "layout-user.hbs",
+        return res.status(400).json({
+          message: 'Foodtruck already registered',
         });
       } else {
         Foodtruck.create({
           name,
           description,
-          image,
+          // image,
           price,
           date: [],
           food: !!food,
@@ -82,7 +77,7 @@ router.post(
               subject: "Foodtruck added!",
               html: `<h2>Thank you for adding ${name} to you foodtrucks!</h2><p>Thank you for using our platform</p>`,
             });
-            res.redirect('/private/profile-owner');
+            res.status(200).json(createdFoodtruck);
           })
         });
       }
@@ -113,36 +108,28 @@ router.post('/results', (req, res) => {
 
   Foodtruck.find(filterObject)
     .then((results) => {
-      if(req.session.currentUser && req.session.currentUser._id){
-        res.render('foodtruck/foodtruck-list', { user: req.session.currentUser, foodtrucks: results, layout: "layout-user.hbs" });
-      } else {
-        res.render('foodtruck/foodtruck-list', { foodtrucks: results });
-      }
+      return res.status(200).json(results);
     })
-    .catch((error) => console.error(error));
+    .catch(() => {
+      return res.status(400).json();
+    });
 });
 
-router.post('/:id/delete', (req, res) => {
+router.delete('/:id/delete', (req, res) => {
   const { id } = req.params;
   Foodtruck.findByIdAndDelete({_id: id})
     .then(() => {
-      res.redirect('/private/profile-owner');
+      return res.status(200).json(id);
     })
-    .catch((error) => console.error(error));
+    .catch(() => {
+      return res.status(400).json();
+    });
 });
 
-router.get('/:id/edit', (req, res) => {
-  const { id } = req.params;
-  Foodtruck.findById(id)
-    .then((foodtruck) => { 
-      res.render('foodtruck/foodtruck-edit', { user: req.session.currentUser, foodtruck, layout: "layout-user.hbs" })})
-    .catch((error) => console.error(error));
-});
-
-router.post('/:id/edit', uploader.single('image'), (req, res) => {
+router.put('/:id/edit', (req, res) => {
   const { id } = req.params;
   let { name, description, price } = req.body;
-  const image = req.file.path;
+  // const image = req.file.path;
   const food = req.body.food ? true : false;
   const drinks = req.body.drinks ? true : false;
   const bagels = req.body.bagels ? true : false;
@@ -164,7 +151,7 @@ router.post('/:id/edit', uploader.single('image'), (req, res) => {
   Foodtruck.findByIdAndUpdate(id, {
     name,
     description,
-    image,
+    // image,
     price,
     food,
     drinks,
@@ -183,11 +170,13 @@ router.post('/:id/edit', uploader.single('image'), (req, res) => {
     iceCream,
     cakes,
     dessert,
-  })
-    .then(() => {
-      res.redirect(`/foodtruck/${id}`);
+  }, {new: true})
+    .then((updatedFoodtruck) => {
+      return res.status(200).json(updatedFoodtruck);
     })
-    .catch((error) => console.error(error));
+    .catch(() => {
+      return res.status(400).json();
+    });
 });
 
 router.post('/:id/book', (req, res) => {
@@ -201,7 +190,7 @@ router.post('/:id/book', (req, res) => {
       bookingDate: Date.now(),
     })
     .then((reservation) => {
-      res.redirect('/private/profile');
+      res.status(200).json(reservation);
       transporter.sendMail({
         from: "Contact <eventruckinfo@gmail.com",
         to: req.session.currentUser.email,
@@ -209,22 +198,24 @@ router.post('/:id/book', (req, res) => {
         html: `<h2>You have booked a Foodtruck</h2><p>Thank you for using our platform. Eventruck.</p>`,
       });
     })
-    .catch((error) => console.error(error));
+    .catch(() => {
+      return res.status(400).json();
+    });
   })
-  .catch((error) => console.error(error));
+  .catch(() => {
+    return res.status(400).json();
+  });
 })
 
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  Foodtruck.findById({ _id: id })
+  Foodtruck.findById(id)
     .then((foodtruck) => {
-      if(req.session.currentUser && req.session.currentUser._id){
-        res.render('foodtruck/foodtruck-details', { user: req.session.currentUser, foodtruck, layout: "layout-user.hbs" });
-      } else {
-        res.render('foodtruck/foodtruck-details', { foodtruck });
-      }
+      res.status(200).json(foodtruck);
     })
-    .catch((error) => console.error(error));
+    .catch(() => {
+      return res.status(400).json();
+    });
 });
 
 module.exports = router;

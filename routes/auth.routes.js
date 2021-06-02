@@ -7,10 +7,10 @@ const uploader = require('../configs/cloudinary.config');
 const transporter = require('../configs/nodemailer.config');
 const saltRounds = 10;
 
-router.post('/client', uploader.single('image'), (req, res) => {
+router.post('/client', (req, res) => {
   const { username, email, password } = req.body;
 
-  const image = req.file.path;
+  // const image = req.file.path;
 
   if (password.length < 3) {
     return res.status(400).json({
@@ -30,7 +30,7 @@ router.post('/client', uploader.single('image'), (req, res) => {
     } else {
       const salt = bcrypt.genSaltSync(saltRounds);
       const hashPass = bcrypt.hashSync(password, salt);
-      Client.create({ username, email, password: hashPass, image })
+      Client.create({ username, email, password: hashPass})
         .then((user) => {
           req.session.currentUser = user;
           transporter.sendMail({
@@ -46,15 +46,21 @@ router.post('/client', uploader.single('image'), (req, res) => {
   });
 });
 
-router.post('/owner', uploader.single('image'), (req, res) => {
+router.post('/owner', (req, res) => {
   const { username, email, password, NIF, mobilephone } = req.body;
-  //const image = req.file.path;
+  // const image = req.file.path;
 
-  // if (!username || !email) {
-  //   return res
-  //     .status(400)
-  //     .json({ message: 'Please fill all the fields in the form' });
-  // }
+  if (password.length < 3) {
+    return res.status(400).json({
+      message: 'Please make your password at least 3 characters long',
+    });
+  }
+
+  if (!username || !email) {
+    return res
+      .status(400)
+      .json({ message: 'Please fill all the fields in the form' });
+  }
 
   Owner.findOne({
     username,
@@ -70,7 +76,6 @@ router.post('/owner', uploader.single('image'), (req, res) => {
         username,
         email,
         password: hashPass,
-        image,
         NIF,
         mobilephone,
       })
