@@ -14,105 +14,105 @@ function DDMMYYYY(date) {
 
 function isLoggedIn(req, res, next) {
   if (req.session.currentUser) next();
-  else res.redirect('/auth/login');
 }
 
 router.get('/profile', isLoggedIn, (req, res) => {
-  Client.findById({_id: req.session.currentUser._id})
-  .then(user => {
-    Booking.find({ client: req.session.currentUser._id }).populate('foodtruck')
-    .then((bookings) => {
-      const formatBookings = bookings.map(item => ({
-        foodtruck: item.foodtruck,
-        date: DDMMYYYY(item.date),
-        bookingDate: DDMMYYYY(item.bookingDate),
-      }));
-      res.render('client/profile', { user, bookings: formatBookings, layout: "layout-user.hbs" });
+  Client.findById({ _id: req.session.currentUser._id })
+    .then((user) => {
+      Booking.find({ client: req.session.currentUser._id })
+        .populate('foodtruck')
+        .then((bookings) => {
+          const formatBookings = bookings.map((item) => ({
+            foodtruck: item.foodtruck,
+            date: DDMMYYYY(item.date),
+            bookingDate: DDMMYYYY(item.bookingDate),
+          }));
+          res.status(200).json(user, { bookings: formatBookings });
+        })
+        .catch((error) => res.status(500).json(error));
     })
-  })
+    .catch((error) => res.status(500).json(error));
 });
 
 router.get('/profile-owner', isLoggedIn, (req, res) => {
-  Owner.findById({_id: req.session.currentUser._id})
-  .populate('foodtrucks')
-  .then(user => {
-    res.render('owner/profile-owner', { user, layout: "layout-user.hbs" })
-  })
+  Owner.findById({ _id: req.session.currentUser._id })
+    .populate('foodtrucks')
+    .then((user) => {
+      res.status(200).json(user);
+    })
+    .catch(() => {
+      return res.status(400).json();
+    });
 });
 
-router.get('/profile/edit', (req, res) => {
-  Client.findById({_id: req.session.currentUser._id})
-  .then(user => {
-    res.render('client/client-update-form', { user, layout: "layout-user.hbs" });
-  })
-});
-
-router.post('/profile/edit', uploader.single('image'), (req, res) => {
+router.put('/profile/edit', uploader.single('image'), (req, res) => {
   const id = req.session.currentUser._id;
   const { username, email } = req.body;
   const image = req.file.path;
-  Client.findByIdAndUpdate(id, {
-    username,
-    email,
-    image,
-  }, {new: true})
-    .then(() => {
-      res.redirect('/private/profile');
+  Client.findByIdAndUpdate(
+    id,
+    {
+      username,
+      email,
+      image,
+    },
+    { new: true }
+  )
+    .then((updatedUser) => {
+      res.status(200).json(updatedUser);
     })
-    .catch((error) => console.error(error));
+    .catch(() => {
+      return res.status(400).json();
+    });
 });
 
-router.get('/profile-owner/edit', (req, res) => {
-  Owner.findById({_id: req.session.currentUser._id})
-  .populate('foodtrucks')
-  .then(user => {
-    res.render('owner/owner-update-form', { user, layout: "layout-user.hbs" })
-  })
-});
-
-router.post('/profile-owner/edit',  uploader.single('image'), (req, res) => {
+router.put('/profile-owner/edit', uploader.single('image'), (req, res) => {
   const id = req.session.currentUser._id;
   const { username, email, NIF, mobilephone } = req.body;
   const image = req.file.path;
-  Owner.findByIdAndUpdate(id, {
-    username,
-    email,
-    image,
-    NIF,
-    mobilephone,
-  }, {new: true})
-    .then(() => {
-      res.redirect('/private/profile-owner');
+  Owner.findByIdAndUpdate(
+    id,
+    {
+      username,
+      email,
+      image,
+      NIF,
+      mobilephone,
+    },
+    { new: true }
+  )
+    .then((updatedUser) => {
+      res.status(200).json(updatedUser);
     })
     .catch((error) => console.error(error));
 });
 
-router.post('/profile/delete', (req, res) => {
+router.delete('/profile/delete', (req, res) => {
   const id = req.session.currentUser._id;
   Client.findByIdAndDelete({ _id: id })
     .then(() => {
       req.session.destroy((err) => {
-        if(err){
-          res.redirect('/');
+        if (err) {
+          res.status(400).json({ message: 'Error deleting profile' });
         } else {
-          res.redirect('/');
+          res.status(200).json({ message: 'User deleted' });
         }
-      })
+      });
     })
     .catch((error) => console.error(error));
 });
 
-router.post('/profile-owner/delete', (req, res) => {
+router.delete('/profile-owner/delete', (req, res) => {
   const id = req.session.currentUser._id;
   Owner.findByIdAndDelete({ _id: id })
     .then(() => {
       req.session.destroy((err) => {
-        if(err){
-          res.redirect('/');
+        if (err) {
+          res.status(400).json({ message: 'Error deleting profile' });
         } else {
-          res.redirect('/');
+          res.status(200).json({ message: 'User deleted' });
         }
-      })
+      });
     })
     .catch((error) => console.error(error));
 });

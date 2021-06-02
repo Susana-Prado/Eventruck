@@ -26,7 +26,7 @@ const foodtruckRouter = require('./routes/foodtruck.routes');
 
 app.use('/', index);
 app.use('/api/auth', authRouter);
-app.use('/private', privateRouter);
-app.use('/foodtruck', foodtruckRouter);
+app.use('/api/private', privateRouter);
+app.use('/api/foodtruck', foodtruckRouter);
 
 module.exports = app;
